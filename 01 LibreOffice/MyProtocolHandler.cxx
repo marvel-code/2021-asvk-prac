@@ -112,8 +112,11 @@ void SAL_CALL MyProtocolHandler::initialize(const Sequence<Any> &aArguments)
     }
 }
 
-Reference<XDispatch> SAL_CALL MyProtocolHandler::queryDispatch(const URL &aURL, const ::rtl::OUString &sTargetFrameName, sal_Int32 nSearchFlags)
-{
+Reference<XDispatch> SAL_CALL MyProtocolHandler::queryDispatch(
+    const URL &aURL, 
+    const ::rtl::OUString &sTargetFrameName, 
+    sal_Int32 nSearchFlags
+) {
     Reference<XDispatch> xRet;
     if (!mxFrame.is())
         return 0;
