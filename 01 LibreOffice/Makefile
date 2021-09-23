@@ -42,7 +42,7 @@ include $(SETTINGS)/std.mk
 include $(SETTINGS)/platform.mk
 
 # Define non-platform/compiler specific settings
-COMP_NAME=kostinrntoolbar
+COMP_NAME=complextoolbarcontrols
 COMP_IMPL_NAME=$(COMP_NAME).uno.$(SHAREDLIB_EXT)
 OUT_COMP_INC=$(OUT_INC)/$(COMP_NAME)
 OUT_COMP_GEN=$(OUT_MISC)/$(COMP_NAME)
