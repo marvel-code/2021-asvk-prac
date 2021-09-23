@@ -45,38 +45,36 @@ namespace com
     }
 }
 
-class MyJob : public cppu::WeakImplHelper2
-<
-    com::sun::star::task::XJob,
-    com::sun::star::lang::XServiceInfo
->
+class MyJob : public cppu::WeakImplHelper2<
+                  com::sun::star::task::XJob,
+                  com::sun::star::lang::XServiceInfo>
 {
 private:
-    ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > mxMSF;
+    ::com::sun::star::uno::Reference<::com::sun::star::lang::XMultiServiceFactory> mxMSF;
 
 public:
-    MyJob( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF)
-        : mxMSF( rxMSF ) {}
+    MyJob(const ::com::sun::star::uno::Reference<::com::sun::star::lang::XMultiServiceFactory> &rxMSF)
+        : mxMSF(rxMSF) {}
     virtual ~MyJob() {}
 
     // XJob
     virtual ::com::sun::star::uno::Any SAL_CALL execute(
-        const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::NamedValue >& Arguments );
+        const ::com::sun::star::uno::Sequence<::com::sun::star::beans::NamedValue> &Arguments);
 
     // XServiceInfo
-    virtual ::rtl::OUString SAL_CALL getImplementationName(  );
-    virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
-    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
+    virtual ::rtl::OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService(const ::rtl::OUString &ServiceName);
+    virtual ::com::sun::star::uno::Sequence<::rtl::OUString> SAL_CALL getSupportedServiceNames();
 };
 
 ::rtl::OUString MyJob_getImplementationName();
 
-sal_Bool SAL_CALL MyJob_supportsService( const ::rtl::OUString& ServiceName );
+sal_Bool SAL_CALL MyJob_supportsService(const ::rtl::OUString &ServiceName);
 
-::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL MyJob_getSupportedServiceNames(  );
+::com::sun::star::uno::Sequence<::rtl::OUString> SAL_CALL MyJob_getSupportedServiceNames();
 
-::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >
-SAL_CALL MyJob_createInstance( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > & rSMgr);
+::com::sun::star::uno::Reference<::com::sun::star::uno::XInterface>
+    SAL_CALL MyJob_createInstance(const ::com::sun::star::uno::Reference<::com::sun::star::lang::XMultiServiceFactory> &rSMgr);
 
 #endif
 

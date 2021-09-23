@@ -18,9 +18,9 @@
 <description xmlns="http://openoffice.org/extensions/description/2006" xmlns:d="http://openoffice.org/extensions/description/2006" xmlns:xlink="http://www.w3.org/1999/xlink">
 <script/>
 <version value="0.0.1"/>
-<identifier value="org.apache.openoffice.framework.complextoolbarcontrols"/>
+<identifier value="org.apache.openoffice.framework.kostinrntoolbar"/>
 <platform value="#EXTENSION_PLATFORM#"/>
 <display-name>
-<name lang="en-US">Complex Toolbar Controls Demo</name>
+<name lang="en-US">KostinRN G2-S1-P1</name>
 </display-name>
 </description>

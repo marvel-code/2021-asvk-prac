@@ -30,8 +30,8 @@
 #include <cppuhelper/implbase1.hxx>
 #include <cppuhelper/implbase2.hxx>
 
-#define MYLISTENER_IMPLEMENTATIONNAME  "vnd.My.impl.NewDocListener"
-#define MYLISTENER_SERVICENAME         "vnd.My.NewDocListener"
+#define MYLISTENER_IMPLEMENTATIONNAME "vnd.My.impl.NewDocListener"
+#define MYLISTENER_SERVICENAME "vnd.My.NewDocListener"
 
 /**
  * Register in the Office configuration as job.
@@ -42,63 +42,65 @@
  * @see CalcListener
  * @see WriterListener
  */
-class MyListener : public cppu::WeakImplHelper2< css::task::XJob         ,
-                                                 css::lang::XServiceInfo >
+class MyListener : public cppu::WeakImplHelper2<css::task::XJob,
+                                                css::lang::XServiceInfo>
 {
-    private:
-        css::uno::Reference< css::lang::XMultiServiceFactory > m_xSMGR;
-    public:
-                 MyListener(const css::uno::Reference< css::lang::XMultiServiceFactory >& xSMGR);
-        virtual ~MyListener();
+private:
+    css::uno::Reference<css::lang::XMultiServiceFactory> m_xSMGR;
+
+public:
+    MyListener(const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR);
+    virtual ~MyListener();
 
     // XJob
-    virtual css::uno::Any SAL_CALL execute(const css::uno::Sequence< css::beans::NamedValue >& lArguments);
+    virtual css::uno::Any SAL_CALL execute(const css::uno::Sequence<css::beans::NamedValue> &lArguments);
 
     // XServiceInfo
     virtual ::rtl::OUString SAL_CALL getImplementationName();
 
-    virtual sal_Bool SAL_CALL supportsService(const ::rtl::OUString& sServiceName);
+    virtual sal_Bool SAL_CALL supportsService(const ::rtl::OUString &sServiceName);
 
-    virtual css::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames();
+    virtual css::uno::Sequence<::rtl::OUString> SAL_CALL getSupportedServiceNames();
 
-    public:
-
-    static css::uno::Reference< css::uno::XInterface > st_createInstance(const css::uno::Reference< css::lang::XMultiServiceFactory >& xSMGR);
+public:
+    static css::uno::Reference<css::uno::XInterface> st_createInstance(const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR);
 };
 
-class CalcListener : public cppu::WeakImplHelper1< css::document::XEventListener >
+class CalcListener : public cppu::WeakImplHelper1<css::document::XEventListener>
 {
-    private:
-        ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > mxMSF;
+private:
+    ::com::sun::star::uno::Reference<::com::sun::star::lang::XMultiServiceFactory> mxMSF;
 
+public:
+    CalcListener(const css::uno::Reference<css::lang::XMultiServiceFactory> &rxMSF)
+        : mxMSF(rxMSF)
+    {
+    }
 
-    public:
-        CalcListener(const css::uno::Reference< css::lang::XMultiServiceFactory > &rxMSF)
-            : mxMSF( rxMSF )
-        {}
-
-        virtual ~CalcListener()
-        {}
+    virtual ~CalcListener()
+    {
+    }
 
     // document.XEventListener
-    virtual void SAL_CALL notifyEvent(const css::document::EventObject& aEvent);
-    virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent);
+    virtual void SAL_CALL notifyEvent(const css::document::EventObject &aEvent);
+    virtual void SAL_CALL disposing(const css::lang::EventObject &aEvent);
 };
 
-class WriterListener : public cppu::WeakImplHelper1< css::document::XEventListener >
+class WriterListener : public cppu::WeakImplHelper1<css::document::XEventListener>
 {
-    private:
-        css::uno::Reference< css::lang::XMultiServiceFactory > mxMSF;
+private:
+    css::uno::Reference<css::lang::XMultiServiceFactory> mxMSF;
 
-    public:
-        WriterListener(const css::uno::Reference< css::lang::XMultiServiceFactory >& rxMSF);
+public:
+    WriterListener(const css::uno::Reference<css::lang::XMultiServiceFactory> &rxMSF);
 
-        virtual ~WriterListener()
-        {}
+    virtual ~WriterListener()
+    {
+    }
 
-        // document.XEventListener
-    virtual void SAL_CALL notifyEvent(const css::document::EventObject& aEvent);
-    virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent);
+    // document.XEventListener
+    virtual void SAL_CALL notifyEvent(const css::document::EventObject &aEvent);
+    virtual void SAL_CALL disposing(const css::lang::EventObject &aEvent);
 };
 
 #endif

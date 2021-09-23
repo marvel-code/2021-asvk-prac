@@ -29,8 +29,8 @@
 #include <cppuhelper/implbase2.hxx>
 #include <cppuhelper/implbase3.hxx>
 
-#define MYPROTOCOLHANDLER_IMPLEMENTATIONNAME   "vnd.demo.Impl.ProtocolHandler"
-#define MYPROTOCOLHANDLER_SERVICENAME          "vnd.demo.ProtocolHandler"
+#define MYPROTOCOLHANDLER_IMPLEMENTATIONNAME "vnd.demo.Impl.ProtocolHandler"
+#define MYPROTOCOLHANDLER_SERVICENAME "vnd.demo.ProtocolHandler"
 
 namespace com
 {
@@ -43,105 +43,105 @@ namespace com
                 class XModel;
                 class XFrame;
             }
-            namespace uno { class XComponentContext; }
+            namespace uno
+            {
+                class XComponentContext;
+            }
         }
     }
 }
 
-
-class MyProtocolHandler : public cppu::WeakImplHelper3
-<
-    com::sun::star::frame::XDispatchProvider,
-    com::sun::star::lang::XInitialization,
-    com::sun::star::lang::XServiceInfo
->
+class MyProtocolHandler : public cppu::WeakImplHelper3<
+                              com::sun::star::frame::XDispatchProvider,
+                              com::sun::star::lang::XInitialization,
+                              com::sun::star::lang::XServiceInfo>
 {
 private:
-    ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > mxContext;
-    ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame > mxFrame;
+    ::com::sun::star::uno::Reference<::com::sun::star::uno::XComponentContext> mxContext;
+    ::com::sun::star::uno::Reference<::com::sun::star::frame::XFrame> mxFrame;
 
 public:
-    MyProtocolHandler( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > &rxContext)
-        : mxContext( rxContext ) {}
+    MyProtocolHandler(const ::com::sun::star::uno::Reference<::com::sun::star::uno::XComponentContext> &rxContext)
+        : mxContext(rxContext) {}
 
     // XDispatchProvider
-    virtual ::com::sun::star::uno::Reference< ::com::sun::star::frame::XDispatch >
-            SAL_CALL queryDispatch( const ::com::sun::star::util::URL& aURL,
-                const ::rtl::OUString& sTargetFrameName, sal_Int32 nSearchFlags );
-    virtual ::com::sun::star::uno::Sequence < ::com::sun::star::uno::Reference< ::com::sun::star::frame::XDispatch > >
+    virtual ::com::sun::star::uno::Reference<::com::sun::star::frame::XDispatch>
+        SAL_CALL queryDispatch(const ::com::sun::star::util::URL &aURL,
+                               const ::rtl::OUString &sTargetFrameName, sal_Int32 nSearchFlags);
+    virtual ::com::sun::star::uno::Sequence<::com::sun::star::uno::Reference<::com::sun::star::frame::XDispatch>>
         SAL_CALL queryDispatches(
-            const ::com::sun::star::uno::Sequence < ::com::sun::star::frame::DispatchDescriptor >& seqDescriptor );
+            const ::com::sun::star::uno::Sequence<::com::sun::star::frame::DispatchDescriptor> &seqDescriptor);
 
     // XInitialization
-    virtual void SAL_CALL initialize( const ::com::sun::star::uno::Sequence< ::com::sun::star::uno::Any >& aArguments );
+    virtual void SAL_CALL initialize(const ::com::sun::star::uno::Sequence<::com::sun::star::uno::Any> &aArguments);
 
     // XServiceInfo
-    virtual ::rtl::OUString SAL_CALL getImplementationName(  );
-    virtual sal_Bool SAL_CALL supportsService( const ::rtl::OUString& ServiceName );
-    virtual ::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL getSupportedServiceNames(  );
+    virtual ::rtl::OUString SAL_CALL getImplementationName();
+    virtual sal_Bool SAL_CALL supportsService(const ::rtl::OUString &ServiceName);
+    virtual ::com::sun::star::uno::Sequence<::rtl::OUString> SAL_CALL getSupportedServiceNames();
 };
 
 ::rtl::OUString MyProtocolHandler_getImplementationName();
 
-sal_Bool SAL_CALL MyProtocolHandler_supportsService( const ::rtl::OUString& ServiceName );
+sal_Bool SAL_CALL MyProtocolHandler_supportsService(const ::rtl::OUString &ServiceName);
 
-::com::sun::star::uno::Sequence< ::rtl::OUString > SAL_CALL MyProtocolHandler_getSupportedServiceNames(  );
+::com::sun::star::uno::Sequence<::rtl::OUString> SAL_CALL MyProtocolHandler_getSupportedServiceNames();
 
-::com::sun::star::uno::Reference< ::com::sun::star::uno::XInterface >
-SAL_CALL MyProtocolHandler_createInstance( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > & rContext);
+::com::sun::star::uno::Reference<::com::sun::star::uno::XInterface>
+    SAL_CALL MyProtocolHandler_createInstance(const ::com::sun::star::uno::Reference<::com::sun::star::uno::XComponentContext> &rContext);
 
-class BaseDispatch : public cppu::WeakImplHelper2
-<
-    ::com::sun::star::frame::XDispatch,
-    ::com::sun::star::frame::XControlNotificationListener
->
+class BaseDispatch : public cppu::WeakImplHelper2<
+                         ::com::sun::star::frame::XDispatch,
+                         ::com::sun::star::frame::XControlNotificationListener>
 {
 protected:
-    ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame > mxFrame;
-    ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > mxContext;
-    ::com::sun::star::uno::Reference< ::com::sun::star::awt::XToolkit2 > mxToolkit;
+    ::com::sun::star::uno::Reference<::com::sun::star::frame::XFrame> mxFrame;
+    ::com::sun::star::uno::Reference<::com::sun::star::uno::XComponentContext> mxContext;
+    ::com::sun::star::uno::Reference<::com::sun::star::awt::XToolkit2> mxToolkit;
     ::rtl::OUString msDocService;
     ::rtl::OUString maComboBoxText;
-    sal_Bool        mbButtonEnabled;
+    sal_Bool mbButtonEnabled;
 
 public:
-    BaseDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > &rxContext,
-        const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame, const ::rtl::OUString& rServiceName );
+    BaseDispatch(const ::com::sun::star::uno::Reference<::com::sun::star::uno::XComponentContext> &rxContext,
+                 const ::com::sun::star::uno::Reference<::com::sun::star::frame::XFrame> &xFrame, const ::rtl::OUString &rServiceName);
 
     virtual ~BaseDispatch();
 
-    void ShowMessageBox( const com::sun::star::uno::Reference< com::sun::star::frame::XFrame >& rFrame, const ::rtl::OUString& aTitle, const ::rtl::OUString& aMsgText );
-    void SendCommand( const com::sun::star::util::URL& aURL, const ::rtl::OUString& rCommand, const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::NamedValue >& rArgs, sal_Bool bEnabled );
-    void SendCommandTo( const com::sun::star::uno::Reference< com::sun::star::frame::XStatusListener >& xControl, const com::sun::star::util::URL& aURL, const ::rtl::OUString& rCommand, const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::NamedValue >& rArgs, sal_Bool bEnabled );
+    void ShowMessageBox(const com::sun::star::uno::Reference<com::sun::star::frame::XFrame> &rFrame, const ::rtl::OUString &aTitle, const ::rtl::OUString &aMsgText);
+    void SendCommand(const com::sun::star::util::URL &aURL, const ::rtl::OUString &rCommand, const ::com::sun::star::uno::Sequence<::com::sun::star::beans::NamedValue> &rArgs, sal_Bool bEnabled);
+    void SendCommandTo(const com::sun::star::uno::Reference<com::sun::star::frame::XStatusListener> &xControl, const com::sun::star::util::URL &aURL, const ::rtl::OUString &rCommand, const ::com::sun::star::uno::Sequence<::com::sun::star::beans::NamedValue> &rArgs, sal_Bool bEnabled);
 
     // XDispatch
-    virtual void SAL_CALL dispatch( const ::com::sun::star::util::URL& aURL,
-        const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::PropertyValue >& lArgs );
-    virtual void SAL_CALL addStatusListener( const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XStatusListener >& xControl,
-        const ::com::sun::star::util::URL& aURL );
-    virtual void SAL_CALL removeStatusListener( const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XStatusListener >& xControl,
-        const ::com::sun::star::util::URL& aURL );
+    virtual void SAL_CALL dispatch(const ::com::sun::star::util::URL &aURL,
+                                   const ::com::sun::star::uno::Sequence<::com::sun::star::beans::PropertyValue> &lArgs);
+    virtual void SAL_CALL addStatusListener(const ::com::sun::star::uno::Reference<::com::sun::star::frame::XStatusListener> &xControl,
+                                            const ::com::sun::star::util::URL &aURL);
+    virtual void SAL_CALL removeStatusListener(const ::com::sun::star::uno::Reference<::com::sun::star::frame::XStatusListener> &xControl,
+                                               const ::com::sun::star::util::URL &aURL);
 
     // XControlNotificationListener
-    virtual void SAL_CALL controlEvent( const ::com::sun::star::frame::ControlEvent& Event );
+    virtual void SAL_CALL controlEvent(const ::com::sun::star::frame::ControlEvent &Event);
 };
 
 class WriterDispatch : public BaseDispatch
 {
 public:
-    WriterDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > &rxContext,
-        const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame )
-        : BaseDispatch( rxContext, xFrame, rtl::OUString( "com.sun.star.text.TextDocument" ) )
-    {}
+    WriterDispatch(const ::com::sun::star::uno::Reference<::com::sun::star::uno::XComponentContext> &rxContext,
+                   const ::com::sun::star::uno::Reference<::com::sun::star::frame::XFrame> &xFrame)
+        : BaseDispatch(rxContext, xFrame, rtl::OUString("com.sun.star.text.TextDocument"))
+    {
+    }
 };
 
 class CalcDispatch : public BaseDispatch
 {
 public:
-    CalcDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::uno::XComponentContext > &rxContext,
-        const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame )
-        : BaseDispatch( rxContext, xFrame, rtl::OUString( "com.sun.star.sheet.SpreadSheetDocument" ) )
-    {}
+    CalcDispatch(const ::com::sun::star::uno::Reference<::com::sun::star::uno::XComponentContext> &rxContext,
+                 const ::com::sun::star::uno::Reference<::com::sun::star::frame::XFrame> &xFrame)
+        : BaseDispatch(rxContext, xFrame, rtl::OUString("com.sun.star.sheet.SpreadSheetDocument"))
+    {
+    }
 };
 
 #endif
