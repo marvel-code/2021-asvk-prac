@@ -30,8 +30,8 @@
 #include <cppuhelper/implbase1.hxx>
 #include <cppuhelper/implbase2.hxx>
 
-#define MYLISTENER_IMPLEMENTATIONNAME "vnd.My.impl.NewDocListener"
-#define MYLISTENER_SERVICENAME "vnd.My.NewDocListener"
+#define MYLISTENER_IMPLEMENTATIONNAME "My.impl.NewDocListener"
+#define MYLISTENER_SERVICENAME "My.NewDocListener"
 
 /**
  * Register in the Office configuration as job.

@@ -30,7 +30,7 @@
 #include <cppuhelper/implbase3.hxx>
 
 #define MYPROTOCOLHANDLER_IMPLEMENTATIONNAME "vnd.demo.Impl.ProtocolHandler"
-#define MYPROTOCOLHANDLER_SERVICENAME "vnd.demo.ProtocolHandler"
+#define MYPROTOCOLHANDLER_SERVICENAME "myProtocolHandler"
 
 namespace com
 {

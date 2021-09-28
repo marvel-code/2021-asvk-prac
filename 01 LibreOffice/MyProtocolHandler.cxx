@@ -122,7 +122,7 @@ Reference<XDispatch> SAL_CALL MyProtocolHandler::queryDispatch(
         return 0;
 
     Reference<XController> xCtrl = mxFrame->getController();
-    if (xCtrl.is() && aURL.Protocol == "vnd.demo.complextoolbarcontrols.demoaddon:")
+    if (xCtrl.is() && aURL.Protocol == "myProtocol:")
     {
         Reference<XTextViewCursorSupplier> xCursor(xCtrl, UNO_QUERY);
         Reference<XSpreadsheetView> xView(xCtrl, UNO_QUERY);
@@ -207,7 +207,7 @@ void SAL_CALL BaseDispatch::dispatch(const URL &aURL, const Sequence<PropertyVal
      */
     Reference<XInterface> xSelfHold(static_cast<XDispatch *>(this), UNO_QUERY);
 
-    if (aURL.Protocol == "vnd.demo.complextoolbarcontrols.demoaddon:")
+    if (aURL.Protocol == "myProtocol:")
     {
         if (aURL.Path == "ImageButtonCmd")
         {
@@ -256,7 +256,7 @@ void SAL_CALL BaseDispatch::dispatch(const URL &aURL, const Sequence<PropertyVal
             // create new URL to address the combox box
             URL aCmdURL;
             aCmdURL.Path = "ComboboxCmd";
-            aCmdURL.Protocol = "vnd.demo.complextoolbarcontrols.demoaddon:";
+            aCmdURL.Protocol = "vmyProtocol:";
             aCmdURL.Complete = aCmdURL.Path + aCmdURL.Protocol;
 
             // set the selected item as text into the combobox
@@ -289,7 +289,7 @@ void SAL_CALL BaseDispatch::dispatch(const URL &aURL, const Sequence<PropertyVal
             // create new URL to address the image button
             URL aCmdURL;
             aCmdURL.Path = "Command1";
-            aCmdURL.Protocol = "vnd.demo.complextoolbarcontrols.demoaddon:";
+            aCmdURL.Protocol = "myProtocol:";
             aCmdURL.Complete = aCmdURL.Path + aCmdURL.Protocol;
 
             // create and initialize FeatureStateEvent with IsEnabled
@@ -325,7 +325,7 @@ void SAL_CALL BaseDispatch::dispatch(const URL &aURL, const Sequence<PropertyVal
 
 void SAL_CALL BaseDispatch::addStatusListener(const Reference<XStatusListener> &xControl, const URL &aURL)
 {
-    if (aURL.Protocol == "vnd.demo.complextoolbarcontrols.demoaddon:")
+    if (aURL.Protocol == "myProtocol:")
     {
         if (aURL.Path == "ImageButtonCmd")
         {
@@ -449,7 +449,7 @@ void SAL_CALL BaseDispatch::removeStatusListener(const Reference<XStatusListener
 
 void SAL_CALL BaseDispatch::controlEvent(const ControlEvent &Event)
 {
-    if (Event.aURL.Protocol == "vnd.demo.complextoolbarcontrols.demoaddon:")
+    if (Event.aURL.Protocol == "myProtocol:")
     {
         if (Event.aURL.Path == "ComboboxCmd")
         {
