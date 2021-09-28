@@ -1,21 +1,3 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-/*
- * This file is part of the LibreOffice project.
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- *
- * This file incorporates work covered by the following license notice:
- *
- *   Licensed to the Apache Software Foundation (ASF) under one or more
- *   contributor license agreements. See the NOTICE file distributed
- *   with this work for additional information regarding copyright
- *   ownership. The ASF licenses this file to you under the Apache
- *   License, Version 2.0 (the "License"); you may not use this file
- *   except in compliance with the License. You may obtain a copy of
- *   the License at http://www.apache.org/licenses/LICENSE-2.0 .
- */
 
 #ifndef INCLUDED_EXAMPLES_COMPLEXTOOLBARCONTROLS_MYLISTENER_H
 #define INCLUDED_EXAMPLES_COMPLEXTOOLBARCONTROLS_MYLISTENER_H
@@ -37,33 +19,47 @@
  * Register in the Office configuration as job.
  * This is called automatically for all new opened documents. You receive
  * a reference of the opened document and then you can check if it's a
- * supported format. (We are only interested in Writer/Calc documents.)
+ * supported format. (We are only interested in Writer documents.)
  *
- * @see CalcListener
  * @see WriterListener
  */
-class MyListener : public cppu::WeakImplHelper2<css::task::XJob,
-                                                css::lang::XServiceInfo>
+class MyListener : public cppu::WeakImplHelper2<css::task::XJob, css::lang::XServiceInfo>
 {
 private:
     css::uno::Reference<css::lang::XMultiServiceFactory> m_xSMGR;
 
 public:
-    MyListener(const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR);
-    virtual ~MyListener();
+    MyListener(
+        const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR
+    );
+    virtual ~MyListener(
+    );
 
     // XJob
-    virtual css::uno::Any SAL_CALL execute(const css::uno::Sequence<css::beans::NamedValue> &lArguments);
+    virtual css::uno::Any SAL_CALL 
+    execute(
+        const css::uno::Sequence<css::beans::NamedValue> &lArguments
+    );
 
     // XServiceInfo
-    virtual ::rtl::OUString SAL_CALL getImplementationName();
+    virtual ::rtl::OUString SAL_CALL 
+    getImplementationName(
+    );
 
-    virtual sal_Bool SAL_CALL supportsService(const ::rtl::OUString &sServiceName);
+    virtual sal_Bool SAL_CALL 
+    supportsService(
+        const ::rtl::OUString &sServiceName
+    );
 
-    virtual css::uno::Sequence<::rtl::OUString> SAL_CALL getSupportedServiceNames();
+    virtual css::uno::Sequence<::rtl::OUString> SAL_CALL 
+    getSupportedServiceNames(
+    );
 
 public:
-    static css::uno::Reference<css::uno::XInterface> st_createInstance(const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR);
+    static css::uno::Reference<css::uno::XInterface> 
+    st_createInstance(
+        const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR
+    );
 };
 
 class CalcListener : public cppu::WeakImplHelper1<css::document::XEventListener>
@@ -92,17 +88,24 @@ private:
     css::uno::Reference<css::lang::XMultiServiceFactory> mxMSF;
 
 public:
-    WriterListener(const css::uno::Reference<css::lang::XMultiServiceFactory> &rxMSF);
+    WriterListener(
+        const css::uno::Reference<css::lang::XMultiServiceFactory> &rxMSF
+    );
 
-    virtual ~WriterListener()
-    {
-    }
+    virtual 
+    ~WriterListener(
+    ) {}
 
     // document.XEventListener
-    virtual void SAL_CALL notifyEvent(const css::document::EventObject &aEvent);
-    virtual void SAL_CALL disposing(const css::lang::EventObject &aEvent);
+    virtual void SAL_CALL 
+    notifyEvent(
+        const css::document::EventObject &aEvent
+    );
+
+    virtual void SAL_CALL 
+    disposing(
+        const css::lang::EventObject &aEvent
+    );
 };
 
 #endif
-
-/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

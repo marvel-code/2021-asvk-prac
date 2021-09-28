@@ -1,21 +1,3 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-/*
- * This file is part of the LibreOffice project.
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- *
- * This file incorporates work covered by the following license notice:
- *
- *   Licensed to the Apache Software Foundation (ASF) under one or more
- *   contributor license agreements. See the NOTICE file distributed
- *   with this work for additional information regarding copyright
- *   ownership. The ASF licenses this file to you under the Apache
- *   License, Version 2.0 (the "License"); you may not use this file
- *   except in compliance with the License. You may obtain a copy of
- *   the License at http://www.apache.org/licenses/LICENSE-2.0 .
- */
 
 #include "MyListener.h"
 #include <com/sun/star/lang/XMultiServiceFactory.hpp>
@@ -24,17 +6,17 @@
 #include <com/sun/star/document/XEventBroadcaster.hpp>
 #include <cppuhelper/supportsservice.hxx>
 
-MyListener::MyListener(const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR)
-    : m_xSMGR(xSMGR)
-{
-}
+MyListener::MyListener(
+    const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR
+) : m_xSMGR(xSMGR) {}
 
-MyListener::~MyListener()
-{
-}
+MyListener::~MyListener(
+) {}
 
-css::uno::Any SAL_CALL MyListener::execute(const css::uno::Sequence<css::beans::NamedValue> &lArguments)
-{
+css::uno::Any SAL_CALL 
+MyListener::execute(
+    const css::uno::Sequence<css::beans::NamedValue> &lArguments
+) {
     css::uno::Sequence<css::beans::NamedValue> lEnv;
 
     sal_Int32 i = 0;
@@ -101,28 +83,35 @@ css::uno::Any SAL_CALL MyListener::execute(const css::uno::Sequence<css::beans::
     return css::uno::Any();
 }
 
-::rtl::OUString SAL_CALL MyListener::getImplementationName()
-{
+::rtl::OUString SAL_CALL 
+MyListener::getImplementationName(
+) {
     return ::rtl::OUString(MYLISTENER_IMPLEMENTATIONNAME);
 }
 
-css::uno::Sequence<::rtl::OUString> SAL_CALL MyListener::getSupportedServiceNames()
-{
+css::uno::Sequence<::rtl::OUString> SAL_CALL 
+MyListener::getSupportedServiceNames(
+) {
     css::uno::Sequence<::rtl::OUString> lNames(1);
     lNames[0] = ::rtl::OUString(MYLISTENER_SERVICENAME);
     return lNames;
 }
 
-sal_Bool SAL_CALL MyListener::supportsService(const ::rtl::OUString &sServiceName)
-{
+sal_Bool SAL_CALL 
+MyListener::supportsService(
+    const ::rtl::OUString &sServiceName
+) {
     return cppu::supportsService(this, sServiceName);
 }
 
-css::uno::Reference<css::uno::XInterface> MyListener::st_createInstance(const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR)
-{
+css::uno::Reference<css::uno::XInterface> 
+MyListener::st_createInstance(
+    const css::uno::Reference<css::lang::XMultiServiceFactory> &xSMGR
+) {
     MyListener *pListener = new MyListener(xSMGR);
-    css::uno::Reference<css::uno::XInterface> xListener(static_cast<css::task::XJob *>(pListener), css::uno::UNO_QUERY);
+    css::uno::Reference<css::uno::XInterface> xListener(
+        static_cast<css::task::XJob *>(pListener), 
+        css::uno::UNO_QUERY
+    );
     return xListener;
 }
-
-/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

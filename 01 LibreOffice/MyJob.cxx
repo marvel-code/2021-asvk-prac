@@ -37,28 +37,34 @@ using com::sun::star::uno::UNO_QUERY;
 using com::sun::star::uno::XInterface;
 using rtl::OUString;
 
-Any SAL_CALL MyJob::execute(const Sequence<NamedValue> &aArguments)
-{
-    Reference<XEventBroadcaster> xBrd(mxMSF->createInstance(
-                                          "com.sun.star.frame.GlobalEventBroadcaster"),
-                                      UNO_QUERY);
-    Reference<com::sun::star::document::XEventListener> xLstner(mxMSF->createInstance(
-                                                                    "com.sun.star.comp.Office.MyListener"),
-                                                                UNO_QUERY);
+Any SAL_CALL 
+MyJob::execute(
+    const Sequence<NamedValue> &aArguments
+) {
+    Reference<XEventBroadcaster> xBrd(
+        mxMSF->createInstance("com.sun.star.frame.GlobalEventBroadcaster"),
+        UNO_QUERY
+    );
+    Reference<com::sun::star::document::XEventListener> xLstner(
+        mxMSF->createInstance("com.sun.star.comp.Office.MyListener"), 
+        UNO_QUERY
+    );
     if (xBrd.is())
         xBrd->addEventListener(xLstner);
     return Any();
 }
 
-OUString MyJob_getImplementationName()
-{
+OUString 
+MyJob_getImplementationName(
+) {
     return OUString("com.sun.star.comp.Office.MyJob");
 }
 
 #define SERVICE_NAME "com.sun.star.task.Job"
 
-Sequence<OUString> SAL_CALL MyJob_getSupportedServiceNames()
-{
+Sequence<OUString> SAL_CALL 
+MyJob_getSupportedServiceNames(
+) {
     Sequence<OUString> aRet(1);
     OUString *pArray = aRet.getArray();
     pArray[0] = OUString(SERVICE_NAME);
@@ -67,25 +73,29 @@ Sequence<OUString> SAL_CALL MyJob_getSupportedServiceNames()
 
 #undef SERVICE_NAME
 
-Reference<XInterface> SAL_CALL MyJob_createInstance(const Reference<XMultiServiceFactory> &rSMgr)
-{
+Reference<XInterface> SAL_CALL 
+MyJob_createInstance(
+    const Reference<XMultiServiceFactory> &rSMgr
+) {
     return (cppu::OWeakObject *)new MyJob(rSMgr);
 }
 
 // XServiceInfo
-OUString SAL_CALL MyJob::getImplementationName()
-{
+OUString SAL_CALL 
+MyJob::getImplementationName(
+) {
     return MyJob_getImplementationName();
 }
 
-sal_Bool SAL_CALL MyJob::supportsService(const OUString &rServiceName)
-{
+sal_Bool SAL_CALL 
+MyJob::supportsService(
+    const OUString &rServiceName
+) {
     return cppu::supportsService(this, rServiceName);
 }
 
-Sequence<OUString> SAL_CALL MyJob::getSupportedServiceNames()
-{
+Sequence<OUString> SAL_CALL 
+MyJob::getSupportedServiceNames(
+) {
     return MyJob_getSupportedServiceNames();
 }
-
-/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

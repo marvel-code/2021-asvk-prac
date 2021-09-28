@@ -1,21 +1,3 @@
-/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-/*
- * This file is part of the LibreOffice project.
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- *
- * This file incorporates work covered by the following license notice:
- *
- *   Licensed to the Apache Software Foundation (ASF) under one or more
- *   contributor license agreements. See the NOTICE file distributed
- *   with this work for additional information regarding copyright
- *   ownership. The ASF licenses this file to you under the Apache
- *   License, Version 2.0 (the "License"); you may not use this file
- *   except in compliance with the License. You may obtain a copy of
- *   the License at http://www.apache.org/licenses/LICENSE-2.0 .
- */
 
 #include "ListenerHelper.h"
 #include "MyProtocolHandler.h"
@@ -44,8 +26,12 @@ using com::sun::star::util::URL;
 
 ListenerHelper aListenerHelper;
 
-void BaseDispatch::ShowMessageBox(const Reference<XFrame> &rFrame, const ::rtl::OUString &aTitle, const ::rtl::OUString &aMsgText)
-{
+void 
+BaseDispatch::ShowMessageBox(
+    const Reference<XFrame> &rFrame, 
+    const ::rtl::OUString &aTitle, 
+    const ::rtl::OUString &aMsgText
+) {
     if (!mxToolkit.is())
         mxToolkit = Toolkit::create(mxContext);
     Reference<XMessageBoxFactory> xMsgBoxFactory(mxToolkit, UNO_QUERY);
@@ -63,8 +49,13 @@ void BaseDispatch::ShowMessageBox(const Reference<XFrame> &rFrame, const ::rtl::
     }
 }
 
-void BaseDispatch::SendCommand(const com::sun::star::util::URL &aURL, const ::rtl::OUString &rCommand, const Sequence<NamedValue> &rArgs, sal_Bool bEnabled)
-{
+void 
+BaseDispatch::SendCommand(
+    const com::sun::star::util::URL &aURL, 
+    const ::rtl::OUString &rCommand, 
+    const Sequence<NamedValue> &rArgs, 
+    sal_Bool bEnabled
+) {
     Reference<XDispatch> xDispatch =
         aListenerHelper.GetDispatch(mxFrame, aURL.Path);
 
@@ -83,8 +74,14 @@ void BaseDispatch::SendCommand(const com::sun::star::util::URL &aURL, const ::rt
     aListenerHelper.Notify(mxFrame, aEvent.FeatureURL.Path, aEvent);
 }
 
-void BaseDispatch::SendCommandTo(const Reference<XStatusListener> &xControl, const URL &aURL, const ::rtl::OUString &rCommand, const Sequence<NamedValue> &rArgs, sal_Bool bEnabled)
-{
+void 
+BaseDispatch::SendCommandTo(
+    const Reference<XStatusListener> &xControl, 
+    const URL &aURL, 
+    const ::rtl::OUString &rCommand, 
+    const Sequence<NamedValue> &rArgs, 
+    sal_Bool bEnabled
+) {
     FeatureStateEvent aEvent;
 
     aEvent.FeatureURL = aURL;
@@ -100,8 +97,10 @@ void BaseDispatch::SendCommandTo(const Reference<XStatusListener> &xControl, con
     xControl->statusChanged(aEvent);
 }
 
-void SAL_CALL MyProtocolHandler::initialize(const Sequence<Any> &aArguments)
-{
+void SAL_CALL 
+MyProtocolHandler::initialize(
+    const Sequence<Any> &aArguments
+) {
     Reference<XFrame> xFrame;
     if (aArguments.getLength())
     {
@@ -112,8 +111,12 @@ void SAL_CALL MyProtocolHandler::initialize(const Sequence<Any> &aArguments)
     }
 }
 
-Reference<XDispatch> SAL_CALL MyProtocolHandler::queryDispatch(const URL &aURL, const ::rtl::OUString &sTargetFrameName, sal_Int32 nSearchFlags)
-{
+Reference<XDispatch> SAL_CALL 
+MyProtocolHandler::queryDispatch(
+    const URL &aURL, 
+    const ::rtl::OUString &sTargetFrameName, 
+    sal_Int32 nSearchFlags
+) {
     Reference<XDispatch> xRet;
     if (!mxFrame.is())
         return 0;
@@ -147,8 +150,10 @@ Reference<XDispatch> SAL_CALL MyProtocolHandler::queryDispatch(const URL &aURL, 
     return xRet;
 }
 
-Sequence<Reference<XDispatch>> SAL_CALL MyProtocolHandler::queryDispatches(const Sequence<DispatchDescriptor> &seqDescripts)
-{
+Sequence<Reference<XDispatch>> SAL_CALL 
+MyProtocolHandler::queryDispatches(
+    const Sequence<DispatchDescriptor> &seqDescripts
+) {
     sal_Int32 nCount = seqDescripts.getLength();
     Sequence<Reference<XDispatch>> lDispatcher(nCount);
 
@@ -158,13 +163,15 @@ Sequence<Reference<XDispatch>> SAL_CALL MyProtocolHandler::queryDispatches(const
     return lDispatcher;
 }
 
-::rtl::OUString MyProtocolHandler_getImplementationName()
-{
+::rtl::OUString 
+MyProtocolHandler_getImplementationName(
+) {
     return ::rtl::OUString(MYPROTOCOLHANDLER_IMPLEMENTATIONNAME);
 }
 
-Sequence<::rtl::OUString> SAL_CALL MyProtocolHandler_getSupportedServiceNames()
-{
+Sequence<::rtl::OUString> SAL_CALL 
+MyProtocolHandler_getSupportedServiceNames(
+) {
     Sequence<::rtl::OUString> aRet(1);
     aRet[0] = ::rtl::OUString(MYPROTOCOLHANDLER_SERVICENAME);
     return aRet;
@@ -172,29 +179,38 @@ Sequence<::rtl::OUString> SAL_CALL MyProtocolHandler_getSupportedServiceNames()
 
 #undef SERVICE_NAME
 
-Reference<XInterface> SAL_CALL MyProtocolHandler_createInstance(const Reference<XComponentContext> &rSMgr)
-{
+Reference<XInterface> SAL_CALL 
+MyProtocolHandler_createInstance(
+    const Reference<XComponentContext> &rSMgr
+) {
     return (cppu::OWeakObject *)new MyProtocolHandler(rSMgr);
 }
 
 // XServiceInfo
-::rtl::OUString SAL_CALL MyProtocolHandler::getImplementationName()
-{
+::rtl::OUString SAL_CALL 
+MyProtocolHandler::getImplementationName(
+) {
     return MyProtocolHandler_getImplementationName();
 }
 
-sal_Bool SAL_CALL MyProtocolHandler::supportsService(const ::rtl::OUString &rServiceName)
-{
+sal_Bool SAL_CALL 
+MyProtocolHandler::supportsService(
+    const ::rtl::OUString &rServiceName
+) {
     return cppu::supportsService(this, rServiceName);
 }
 
-Sequence<::rtl::OUString> SAL_CALL MyProtocolHandler::getSupportedServiceNames()
-{
+Sequence<::rtl::OUString> SAL_CALL 
+MyProtocolHandler::getSupportedServiceNames(
+) {
     return MyProtocolHandler_getSupportedServiceNames();
 }
 
-void SAL_CALL BaseDispatch::dispatch(const URL &aURL, const Sequence<PropertyValue> &lArgs)
-{
+void SAL_CALL 
+BaseDispatch::dispatch(
+    const URL &aURL, 
+    const Sequence<PropertyValue> &lArgs
+) {
     /* It's necessary to hold this object alive, till this method finishes.
        May the outside dispatch cache (implemented by the menu/toolbar!)
        forget this instance during de-/activation of frames (focus!).
@@ -320,8 +336,11 @@ void SAL_CALL BaseDispatch::dispatch(const URL &aURL, const Sequence<PropertyVal
     }
 }
 
-void SAL_CALL BaseDispatch::addStatusListener(const Reference<XStatusListener> &xControl, const URL &aURL)
-{
+void SAL_CALL 
+BaseDispatch::addStatusListener(
+    const Reference<XStatusListener> &xControl, 
+    const URL &aURL
+) {
     if (aURL.Protocol == "vnd.demo.complextoolbarcontrols.demoaddon:")
     {
         if (aURL.Path == "ImageButtonCmd")
@@ -439,13 +458,18 @@ void SAL_CALL BaseDispatch::addStatusListener(const Reference<XStatusListener> &
     }
 }
 
-void SAL_CALL BaseDispatch::removeStatusListener(const Reference<XStatusListener> &xControl, const URL &aURL)
-{
+void SAL_CALL 
+BaseDispatch::removeStatusListener(
+    const Reference<XStatusListener> &xControl, 
+    const URL &aURL
+) {
     aListenerHelper.RemoveListener(mxFrame, xControl, aURL.Path);
 }
 
-void SAL_CALL BaseDispatch::controlEvent(const ControlEvent &Event)
-{
+void SAL_CALL 
+BaseDispatch::controlEvent(
+    const ControlEvent &Event
+) {
     if (Event.aURL.Protocol == "vnd.demo.complextoolbarcontrols.demoaddon:")
     {
         if (Event.aURL.Path == "ComboboxCmd")
@@ -472,17 +496,18 @@ void SAL_CALL BaseDispatch::controlEvent(const ControlEvent &Event)
     }
 }
 
-BaseDispatch::BaseDispatch(const Reference<XComponentContext> &rxContext,
-                           const Reference<XFrame> &xFrame,
-                           const ::rtl::OUString &rServiceName)
-    : mxContext(rxContext), mxFrame(xFrame), msDocService(rServiceName), mbButtonEnabled(sal_True)
-{
+BaseDispatch::BaseDispatch(
+    const Reference<XComponentContext> &rxContext,
+    const Reference<XFrame> &xFrame,
+    const ::rtl::OUString &rServiceName
+) : mxContext(rxContext), 
+    mxFrame(xFrame), 
+    msDocService(rServiceName), 
+    mbButtonEnabled(sal_True) {
 }
 
-BaseDispatch::~BaseDispatch()
-{
+BaseDispatch::~BaseDispatch(
+) {
     mxFrame.clear();
     mxContext.clear();
 }
-
-/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
