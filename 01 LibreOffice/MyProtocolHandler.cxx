@@ -216,6 +216,8 @@ MyProtocolHandler::getSupportedServiceNames(
     return MyProtocolHandler_getSupportedServiceNames();
 }
 
+#define RTL_TEXTENCODING_UTF8   (RTL_TEXTENC_CAST( 76 ))
+
 void SAL_CALL 
 BaseDispatch::dispatch(
     const URL &aURL, 
@@ -249,6 +251,9 @@ BaseDispatch::dispatch(
             );
             Reference < XText > xText = xTextDocument -> getText();
             Reference < XTextCursor > xTextCursor = xText -> createTextCursor();
+
+            const char* text = "Привет Медвед";
+            xText -> insertString(xTextCursor, OUString(text, strlen(text), RTL_TEXTENCODING_UTF8), false);
         }
         return;
 
