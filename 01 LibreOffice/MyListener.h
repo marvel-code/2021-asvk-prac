@@ -23,7 +23,11 @@
  *
  * @see WriterListener
  */
-class MyListener : public cppu::WeakImplHelper2<css::task::XJob, css::lang::XServiceInfo>
+class MyListener : public cppu::WeakImplHelper2
+<
+    css::task::XJob, 
+    css::lang::XServiceInfo
+>
 {
 private:
     css::uno::Reference<css::lang::XMultiServiceFactory> m_xSMGR;

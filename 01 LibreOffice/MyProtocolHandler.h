@@ -33,10 +33,12 @@ namespace com
     }
 }
 
-class MyProtocolHandler : public cppu::WeakImplHelper3<
-                              com::sun::star::frame::XDispatchProvider,
-                              com::sun::star::lang::XInitialization,
-                              com::sun::star::lang::XServiceInfo>
+class MyProtocolHandler : public cppu::WeakImplHelper3
+<
+    com::sun::star::frame::XDispatchProvider,
+    com::sun::star::lang::XInitialization,
+    com::sun::star::lang::XServiceInfo
+>
 {
 private:
     ::com::sun::star::uno::Reference<::com::sun::star::uno::XComponentContext> mxContext;
@@ -98,9 +100,11 @@ MyProtocolHandler_createInstance(
     const ::com::sun::star::uno::Reference<::com::sun::star::uno::XComponentContext> &rContext
 );
 
-class BaseDispatch : public cppu::WeakImplHelper2<
-                         ::com::sun::star::frame::XDispatch,
-                         ::com::sun::star::frame::XControlNotificationListener>
+class BaseDispatch : public cppu::WeakImplHelper2
+<
+    ::com::sun::star::frame::XDispatch,
+    ::com::sun::star::frame::XControlNotificationListener
+>
 {
 protected:
     ::com::sun::star::uno::Reference<::com::sun::star::frame::XFrame> mxFrame;

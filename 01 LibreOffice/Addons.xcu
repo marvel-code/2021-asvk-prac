@@ -7,7 +7,7 @@
                 <!-- Spinner word count -->
                 <node oor:name="m1" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:SpinfieldCmd</value>
+                        <value>vnd.demo.complextoolbarcontrols.demoaddon:spinWordCount</value>
                     </prop>
                     <prop oor:name="Title" oor:type="xs:string">
                         <value xml:lang="en-US">Word count</value>
@@ -29,7 +29,7 @@
                 <!-- Combobox word language -->
                 <node oor:name="m2" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:ComboboxCmd</value>
+                        <value>vnd.demo.complextoolbarcontrols.demoaddon:setWordLanguage</value>
                     </prop>
                     <prop oor:name="Title" oor:type="xs:string">
                         <value xml:lang="en-US">Language</value>
@@ -51,7 +51,7 @@
                 <!-- Textbox max word length -->
                 <node oor:name="m3" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:EditfieldCmd</value>
+                        <value>vnd.demo.complextoolbarcontrols.demoaddon:setMaxWordLength</value>
                     </prop>
                     <prop oor:name="Title" oor:type="xs:string">
                         <value xml:lang="en-US">Max word length</value>
@@ -73,7 +73,7 @@
                 <!-- Button document generator -->
                 <node oor:name="m4" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:ImageButtonCmd</value>
+                        <value>vnd.demo.complextoolbarcontrols.demoaddon:generateText</value>
                     </prop>
                     <prop oor:name="Title" oor:type="xs:string">
                         <value xml:lang="en-US">Generate</value>
@@ -99,7 +99,7 @@
                 <!-- Button statistics append -->
                 <node oor:name="m6" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:ImageButtonCmd</value>
+                        <value>vnd.demo.complextoolbarcontrols.demoaddon:appendStatistics</value>
                     </prop>
                     <prop oor:name="Title" oor:type="xs:string">
                         <value xml:lang="en-US">Append statistics</value>
@@ -118,7 +118,7 @@
                 <!-- Button cyrilics color -->
                 <node oor:name="m7" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:ImageButtonCmd</value>
+                        <value>vnd.demo.complextoolbarcontrols.demoaddon:colorCyrilics</value>
                     </prop>
                     <prop oor:name="Title" oor:type="xs:string">
                         <value xml:lang="en-US">Color cyrilics</value>

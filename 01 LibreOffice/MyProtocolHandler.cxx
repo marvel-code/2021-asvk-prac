@@ -12,6 +12,11 @@
 #include <com/sun/star/system/SystemShellExecuteFlags.hpp>
 #include <com/sun/star/system/XSystemShellExecute.hpp>
 #include <cppuhelper/supportsservice.hxx>
+#include <com/sun/star/text/XTextDocument.hpp>
+#include <com/sun/star/text/XText.hpp>
+#include <com/sun/star/text/XTextCursor.hpp>
+#include <com/sun/star/lang/XComponent.hpp>
+#include <com/sun/star/frame/XComponentLoader.hpp>
 
 using namespace com::sun::star::awt;
 using namespace com::sun::star::frame;
@@ -23,6 +28,12 @@ using com::sun::star::beans::PropertyValue;
 using com::sun::star::sheet::XSpreadsheetView;
 using com::sun::star::text::XTextViewCursorSupplier;
 using com::sun::star::util::URL;
+using com::sun::star::text::XText;
+using com::sun::star::text::XTextCursor;
+using com::sun::star::text::XTextDocument;
+using com::sun::star::lang::XComponent;
+using com::sun::star::frame::XComponentLoader;
+using ::rtl::OUString;
 
 ListenerHelper aListenerHelper;
 
@@ -130,18 +141,17 @@ MyProtocolHandler::queryDispatch(
             // without an appropriate corresponding document the handler doesn't function
             return xRet;
 
-        if (aURL.Path == "ImageButtonCmd" ||
-            aURL.Path == "ComboboxCmd" ||
-            aURL.Path == "ToggleDropdownButtonCmd" ||
-            aURL.Path == "DropdownButtonCmd" ||
-            aURL.Path == "SpinfieldCmd" ||
-            aURL.Path == "EditfieldCmd" ||
-            aURL.Path == "DropdownboxCmd")
+        if (aURL.Path == "spinWordCount" ||
+            aURL.Path == "setWordLanguage" ||
+            aURL.Path == "setMaxWordLength" ||
+            aURL.Path == "generateText" ||
+            aURL.Path == "appendStatistics" ||
+            aURL.Path == "colorCyrilics")
         {
             xRet = aListenerHelper.GetDispatch(mxFrame, aURL.Path);
             if (!xRet.is())
             {
-                xRet = xCursor.is() ? (BaseDispatch *)new WriterDispatch(mxContext, mxFrame) : (BaseDispatch *)new CalcDispatch(mxContext, mxFrame);
+                xRet = (BaseDispatch *)new WriterDispatch(mxContext, mxFrame);
                 aListenerHelper.AddDispatch(xRet, mxFrame, aURL.Path);
             }
         }
@@ -222,6 +232,26 @@ BaseDispatch::dispatch(
 
     if (aURL.Protocol == "vnd.demo.complextoolbarcontrols.demoaddon:")
     {
+        if (aURL.Path == "generateText") {
+            Reference < XComponentLoader > rComponentLoader(
+                this->mxFrame, 
+                UNO_QUERY
+            );
+            Reference <XComponent> xWriterComponent = rComponentLoader -> loadComponentFromURL(
+                OUString::createFromAscii("private:factory/swriter"),
+                OUString::createFromAscii("_blank"),
+                0,
+                Sequence < ::com::sun::star::beans::PropertyValue > ()
+            );
+            Reference < XTextDocument > xTextDocument(
+                xWriterComponent, 
+                UNO_QUERY
+            );
+            Reference < XText > xText = xTextDocument -> getText();
+            Reference < XTextCursor > xTextCursor = xText -> createTextCursor();
+        }
+        return;
+
         if (aURL.Path == "ImageButtonCmd")
         {
             // open the LibreOffice web page
