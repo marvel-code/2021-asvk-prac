@@ -90,14 +90,14 @@
                 </node>
 
                 <!-- | Separator -->
-                <node oor:name="m5" oor:op="replace">
+                <!-- <node oor:name="m5" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
                         <value>private:separator</value>
                     </prop>
-                </node>
+                </node> -->
 
                 <!-- Button statistics append -->
-                <node oor:name="m6" oor:op="replace">
+                <!-- <node oor:name="m6" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
                         <value>vnd.demo.complextoolbarcontrols.demoaddon:appendStatistics</value>
                     </prop>
@@ -113,10 +113,10 @@
                     <prop oor:name="ControlType" oor:type="xs:string">
                         <value>Button</value>
                     </prop>
-                </node>
+                </node> -->
 
                 <!-- Button cyrilics color -->
-                <node oor:name="m7" oor:op="replace">
+                <!-- <node oor:name="m7" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
                         <value>vnd.demo.complextoolbarcontrols.demoaddon:colorCyrilics</value>
                     </prop>
@@ -132,7 +132,7 @@
                     <prop oor:name="ControlType" oor:type="xs:string">
                         <value>Button</value>
                     </prop>
-                </node>
+                </node> -->
             </node>
         </node>
     </node>
