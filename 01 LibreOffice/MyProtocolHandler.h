@@ -114,6 +114,7 @@ protected:
     ::rtl::OUString maComboBoxText;
     int maxWordLen;
     int langType;
+    int wordCount;
     sal_Bool mbButtonEnabled;
 
 public:

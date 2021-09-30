@@ -302,7 +302,7 @@ BaseDispatch::dispatch(
                 : this->langType == 1
                 ? GenLang::Russian
                 : GenLang::Any;
-            xText -> insertString(xTextCursor, generateText(10, this->maxWordLen, genLang), false);
+            xText -> insertString(xTextCursor, generateText(this->wordCount, this->maxWordLen, genLang), false);
         } else if (aURL.Path == "setMaxWordLength") {
             // Retrieve the text argument from the sequence property value
             rtl::OUString aText;
@@ -320,7 +320,6 @@ BaseDispatch::dispatch(
                 ShowMessageBox(this->mxFrame, "maxWordLen", "wrong");
             }
         } else if (aURL.Path == "setWordLanguage") {
-            // Retrieve the text argument from the sequence property value
             rtl::OUString aText;
             for (sal_Int32 i = 0; i < lArgs.getLength(); i++)
             {
@@ -334,6 +333,15 @@ BaseDispatch::dispatch(
             if (aText == "English") this->langType = 0;
             else if (aText == "Russian") this->langType = 1;
             else if (aText == "Any") this->langType = 2;
+        } else if (aURL.Path == "spinWordCount") {
+            for (sal_Int32 i = 0; i < lArgs.getLength(); i++)
+            {
+                if (lArgs[i].Name == "Value")
+                {
+                    lArgs[i].Value >>= this->wordCount;
+                    break;
+                }
+            }
         }
 
 
@@ -530,22 +538,18 @@ BaseDispatch::addStatusListener(
             aArgs[0].Value <<= nPos;
             SendCommandTo(xControl, aURL, ::rtl::OUString("CheckItemPos"), aArgs, sal_True);
         }
-        else if (aURL.Path == "SpinfieldCmd")
+        else if (aURL.Path == "spinWordCount")
         {
             // A spin button
-            Sequence<NamedValue> aArgs(5);
+            Sequence<NamedValue> aArgs(3);
 
             // send command to initialize spin button
             aArgs[0].Name = "Value";
-            aArgs[0].Value <<= double(0.0);
-            aArgs[1].Name = "UpperLimit";
-            aArgs[1].Value <<= double(10.0);
-            aArgs[2].Name = "LowerLimit";
-            aArgs[2].Value <<= double(0.0);
-            aArgs[3].Name = "Step";
-            aArgs[3].Value <<= double(0.1);
-            aArgs[4].Name = "OutputFormat";
-            aArgs[4].Value <<= rtl::OUString("%.2f cm");
+            aArgs[0].Value <<= int(1.0);
+            aArgs[1].Name = "LowerLimit";
+            aArgs[1].Value <<= int(1.0);
+            aArgs[2].Name = "Step";
+            aArgs[2].Value <<= int(1.0);
 
             SendCommandTo(xControl, aURL, rtl::OUString("SetValues"), aArgs, sal_True);
         }
@@ -617,7 +621,8 @@ BaseDispatch::BaseDispatch(
     msDocService(rServiceName), 
     mbButtonEnabled(sal_True),
     maxWordLen(5),
-    langType(0) {
+    langType(0),
+    wordCount(1) {
 }
 
 BaseDispatch::~BaseDispatch(
