@@ -225,15 +225,18 @@ MyProtocolHandler::getSupportedServiceNames(
 enum class GenLang {
     Russian,
     English,
+    Any,
 };
 
 const char* RU_CHAR = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 OUString RU(RU_CHAR, strlen(RU_CHAR), RTL_TEXTENCODING_UTF8);
 OUString EN = "abcdefghijklmnopqrstuvwxyz";
+OUString ANY = RU + EN;
 
 OUString generateWord(const int& maxLen, const GenLang& genLang) {
     OUString alphabet = EN;
     if (genLang == GenLang::Russian) alphabet = RU;
+    if (genLang == GenLang::Any) alphabet = ANY;
     int alphabetLen = alphabet.getLength();
     int len = rand() % maxLen;
     if (len == 0) len = 1;
@@ -293,7 +296,12 @@ BaseDispatch::dispatch(
             Reference < XText > xText = xTextDocument -> getText();
             Reference < XTextCursor > xTextCursor = xText -> createTextCursor();
             
-            GenLang genLang = this->langType == 0 ? GenLang::English : GenLang::Russian;
+            GenLang genLang = 
+                this->langType == 0 
+                ? GenLang::English 
+                : this->langType == 1
+                ? GenLang::Russian
+                : GenLang::Any;
             xText -> insertString(xTextCursor, generateText(10, this->maxWordLen, genLang), false);
         } else if (aURL.Path == "setMaxWordLength") {
             // Retrieve the text argument from the sequence property value
