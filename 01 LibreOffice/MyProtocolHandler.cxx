@@ -216,7 +216,48 @@ MyProtocolHandler::getSupportedServiceNames(
     return MyProtocolHandler_getSupportedServiceNames();
 }
 
+
+
+
+
+
 #define RTL_TEXTENCODING_UTF8   (RTL_TEXTENC_CAST( 76 ))
+enum class GenLang {
+    Russian,
+    English,
+};
+
+const char* RU_CHAR = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+OUString RU(RU_CHAR, strlen(RU_CHAR), RTL_TEXTENCODING_UTF8);
+OUString EN = "abcdefghijklmnopqrstuvwxyz";
+
+OUString generateWord(const int& maxLen, const GenLang& genLang) {
+    OUString alphabet = EN;
+    if (genLang == GenLang::Russian) alphabet = RU;
+    int alphabetLen = alphabet.getLength();
+    int len = rand() % maxLen;
+    if (len == 0) len = 1;
+    
+    OUString result = "";
+    for (int i = 0; i < len; ++i) {
+        result += alphabet.copy(rand() % alphabetLen, 1);
+    }
+    return result;
+}
+
+OUString generateText(const int& wordCount, const int& maxWordLen, const GenLang& genLang) {
+    OUString result = "";
+
+    for (int word_i = 0; word_i < wordCount; ++word_i) {
+        result += generateWord(maxWordLen, genLang) + " ";
+    }
+
+    return result;
+}
+
+
+
+
 
 void SAL_CALL 
 BaseDispatch::dispatch(
@@ -252,8 +293,7 @@ BaseDispatch::dispatch(
             Reference < XText > xText = xTextDocument -> getText();
             Reference < XTextCursor > xTextCursor = xText -> createTextCursor();
 
-            const char* text = "Привет Медвед";
-            xText -> insertString(xTextCursor, OUString(text, strlen(text), RTL_TEXTENCODING_UTF8), false);
+            xText -> insertString(xTextCursor, generateText(3, 5, GenLang::Russian), false);
         }
         return;
 
