@@ -310,8 +310,23 @@ BaseDispatch::dispatch(
             } catch (Exception &ex) {
                 ShowMessageBox(this->mxFrame, "maxWordLen", "wrong");
             }
+        } else if (aURL.Path == "setWordLanguage") {
+            // Retrieve the text argument from the sequence property value
+            rtl::OUString aText;
+            for (sal_Int32 i = 0; i < lArgs.getLength(); i++)
+            {
+                if (lArgs[i].Name == "Text")
+                {
+                    lArgs[i].Value >>= aText;
+                    break;
+                }
+            }
         }
+
+
         return;
+
+
 
         if (aURL.Path == "ImageButtonCmd")
         {
@@ -521,28 +536,20 @@ BaseDispatch::addStatusListener(
 
             SendCommandTo(xControl, aURL, rtl::OUString("SetValues"), aArgs, sal_True);
         }
-        else if (aURL.Path == "DropdownboxCmd")
+        else if (aURL.Path == "setWordLanguage")
         {
-            // A dropdown box is normally used for a group of commands
-            // where the user can select one of a defined set.
-            Sequence<NamedValue> aArgs(1);
-
-            // send command to set context menu content
-            Sequence<rtl::OUString> aList(10);
-            aList[0] = "White";
-            aList[1] = "Black";
-            aList[2] = "Red";
-            aList[3] = "Blue";
-            aList[4] = "Green";
-            aList[5] = "Grey";
-            aList[6] = "Yellow";
-            aList[7] = "Orange";
-            aList[8] = "Brown";
-            aList[9] = "Pink";
-
+            Sequence< rtl::OUString > aList( 3 );
+            aList[0] = "English";
+            aList[1] = "Russian";
+            Sequence< NamedValue > aArgs( 1 );
             aArgs[0].Name = "List";
             aArgs[0].Value <<= aList;
-            SendCommandTo(xControl, aURL, rtl::OUString("SetList"), aArgs, sal_True);
+            SendCommandTo( xControl, aURL, rtl::OUString("SetList"), aArgs, sal_True );
+
+            // Set item 0
+            aArgs[0].Name = rtl::OUString("Pos");
+            aArgs[0].Value <<= sal_Int32(0);
+            SendCommandTo( xControl, aURL, OUString("CheckItemPos"), aArgs, sal_True);
         }
 
         aListenerHelper.AddListener(mxFrame, xControl, aURL.Path);

@@ -41,7 +41,7 @@
                         <value>com.sun.star.text.TextDocument</value>
                     </prop>
                     <prop oor:name="ControlType" oor:type="xs:string">
-                        <value>Combobox</value>
+                        <value>Dropdownbox</value>
                     </prop>
                     <prop oor:name="Width" oor:type="xs:long">
                         <value>200</value>
