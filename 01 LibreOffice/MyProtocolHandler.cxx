@@ -293,7 +293,23 @@ BaseDispatch::dispatch(
             Reference < XText > xText = xTextDocument -> getText();
             Reference < XTextCursor > xTextCursor = xText -> createTextCursor();
 
-            xText -> insertString(xTextCursor, generateText(3, 5, GenLang::Russian), false);
+            xText -> insertString(xTextCursor, generateText(10, this->maxWordLen, GenLang::Russian), false);
+        } else if (aURL.Path == "setMaxWordLength") {
+            // Retrieve the text argument from the sequence property value
+            rtl::OUString aText;
+            for (sal_Int32 i = 0; i < lArgs.getLength(); i++)
+            {
+                if (lArgs[i].Name == "Text")
+                {
+                    lArgs[i].Value >>= aText;
+                    break;
+                }
+            }
+            try {
+                this->maxWordLen = aText.toInt32();
+            } catch (Exception &ex) {
+                ShowMessageBox(this->mxFrame, "maxWordLen", "wrong");
+            }
         }
         return;
 
@@ -578,7 +594,8 @@ BaseDispatch::BaseDispatch(
 ) : mxContext(rxContext), 
     mxFrame(xFrame), 
     msDocService(rServiceName), 
-    mbButtonEnabled(sal_True) {
+    mbButtonEnabled(sal_True),
+    maxWordLen(5) {
 }
 
 BaseDispatch::~BaseDispatch(

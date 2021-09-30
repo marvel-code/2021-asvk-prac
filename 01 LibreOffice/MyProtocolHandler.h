@@ -112,6 +112,7 @@ protected:
     ::com::sun::star::uno::Reference<::com::sun::star::awt::XToolkit2> mxToolkit;
     ::rtl::OUString msDocService;
     ::rtl::OUString maComboBoxText;
+    int maxWordLen;
     sal_Bool mbButtonEnabled;
 
 public:
