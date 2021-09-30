@@ -292,8 +292,9 @@ BaseDispatch::dispatch(
             );
             Reference < XText > xText = xTextDocument -> getText();
             Reference < XTextCursor > xTextCursor = xText -> createTextCursor();
-
-            xText -> insertString(xTextCursor, generateText(10, this->maxWordLen, GenLang::Russian), false);
+            
+            GenLang genLang = this->langType == 0 ? GenLang::English : GenLang::Russian;
+            xText -> insertString(xTextCursor, generateText(10, this->maxWordLen, genLang), false);
         } else if (aURL.Path == "setMaxWordLength") {
             // Retrieve the text argument from the sequence property value
             rtl::OUString aText;
@@ -321,6 +322,10 @@ BaseDispatch::dispatch(
                     break;
                 }
             }
+
+            if (aText == "English") this->langType = 0;
+            else if (aText == "Russian") this->langType = 1;
+            else if (aText == "Any") this->langType = 2;
         }
 
 
@@ -541,6 +546,7 @@ BaseDispatch::addStatusListener(
             Sequence< rtl::OUString > aList( 3 );
             aList[0] = "English";
             aList[1] = "Russian";
+            aList[2] = "Any";
             Sequence< NamedValue > aArgs( 1 );
             aArgs[0].Name = "List";
             aArgs[0].Value <<= aList;
@@ -602,7 +608,8 @@ BaseDispatch::BaseDispatch(
     mxFrame(xFrame), 
     msDocService(rServiceName), 
     mbButtonEnabled(sal_True),
-    maxWordLen(5) {
+    maxWordLen(5),
+    langType(0) {
 }
 
 BaseDispatch::~BaseDispatch(

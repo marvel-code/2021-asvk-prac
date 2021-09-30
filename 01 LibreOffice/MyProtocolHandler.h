@@ -113,6 +113,7 @@ protected:
     ::rtl::OUString msDocService;
     ::rtl::OUString maComboBoxText;
     int maxWordLen;
+    int langType;
     sal_Bool mbButtonEnabled;
 
 public:
