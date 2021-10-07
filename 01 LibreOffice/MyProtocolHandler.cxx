@@ -13,10 +13,16 @@
 #include <com/sun/star/system/XSystemShellExecute.hpp>
 #include <cppuhelper/supportsservice.hxx>
 #include <com/sun/star/text/XTextDocument.hpp>
+#include <com/sun/star/text/XTextRange.hpp>
+#include <com/sun/star/text/XTextContent.hpp>
+#include <com/sun/star/text/XTextTable.hpp>
 #include <com/sun/star/text/XText.hpp>
 #include <com/sun/star/text/XTextCursor.hpp>
 #include <com/sun/star/lang/XComponent.hpp>
 #include <com/sun/star/frame/XComponentLoader.hpp>
+#include <com/sun/star/table/XTable.hpp>
+#include <com/sun/star/table/XCell.hpp>
+#include <com/sun/star/lang/XMultiServiceFactory.hpp>
 
 using namespace com::sun::star::awt;
 using namespace com::sun::star::frame;
@@ -25,13 +31,20 @@ using namespace com::sun::star::uno;
 
 using com::sun::star::beans::NamedValue;
 using com::sun::star::beans::PropertyValue;
+using com::sun::star::beans::XPropertySet;
 using com::sun::star::sheet::XSpreadsheetView;
 using com::sun::star::text::XTextViewCursorSupplier;
 using com::sun::star::util::URL;
 using com::sun::star::text::XText;
 using com::sun::star::text::XTextCursor;
 using com::sun::star::text::XTextDocument;
+using com::sun::star::text::XTextRange;
+using com::sun::star::text::XTextContent;
+using com::sun::star::text::XTextTable;
+using com::sun::star::table::XTable;
+using com::sun::star::table::XCell;
 using com::sun::star::lang::XComponent;
+using com::sun::star::lang::XMultiServiceFactory;
 using com::sun::star::frame::XComponentLoader;
 using ::rtl::OUString;
 
@@ -228,9 +241,9 @@ enum class GenLang {
     Any,
 };
 
-const char* RU_CHAR = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+const char* RU_CHAR = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ";
 OUString RU(RU_CHAR, strlen(RU_CHAR), RTL_TEXTENCODING_UTF8);
-OUString EN = "abcdefghijklmnopqrstuvwxyz";
+OUString EN = "abcdefghijklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM";
 OUString ANY = RU + EN;
 
 OUString generateWord(const int& maxLen, const GenLang& genLang) {
@@ -258,7 +271,13 @@ OUString generateText(const int& wordCount, const int& maxWordLen, const GenLang
     return result;
 }
 
-
+bool isLanguageChar(rtl::OUString x) {
+    for (int i = 0; i < ANY.getLength(); ++i) {
+        if (x == ANY.copy(i, 1))
+            return true;
+    }
+    return false;
+}
 
 
 
@@ -341,6 +360,66 @@ BaseDispatch::dispatch(
                     lArgs[i].Value >>= this->wordCount;
                     break;
                 }
+            }
+        } else if (aURL.Path == "appendStatistics") {
+            // Count word lengths
+            Reference<XTextDocument> xTextDocument(mxFrame->getController()->getModel(), UNO_QUERY);
+            Reference<XText> xText = xTextDocument->getText();
+            Reference<XTextCursor> xTextCursor = xText->createTextCursor();
+            std::map<int, int, std::less<int>> wordLenCounter;
+            int wordLen = 0;
+            auto countWordLen = [&wordLenCounter, &wordLen]() mutable {
+                if (wordLen != 0) {
+                    auto it = wordLenCounter.find(wordLen);
+                    if (it == wordLenCounter.end())
+                        wordLenCounter[wordLen] = 0;
+                    wordLenCounter[wordLen] += 1;
+                    wordLen = 0;
+                }
+            };
+            for (int i = 0; xTextCursor -> goRight(1, true); ++i) {
+                sal_Unicode c = (xTextCursor -> getString())[i];
+                bool isChar = isLanguageChar((OUString) c);
+                if (isChar)
+                    wordLen += 1;
+                else
+                    countWordLen();
+            }
+            countWordLen();
+
+            // Append table
+            xTextCursor->gotoEnd(false);
+            Reference<XMultiServiceFactory> oDocMSF(xTextDocument, UNO_QUERY);
+            Reference<XTextTable> xTable(
+                oDocMSF->createInstance(OUString::createFromAscii("com.sun.star.text.TextTable")),
+                UNO_QUERY
+            );
+            xTable->initialize(wordLenCounter.size() + 1, 2);
+            Reference<XTextRange> xTextRange = xText->getEnd();
+            Reference<XTextContent> xTextContent(xTable, UNO_QUERY);
+            xText->insertTextContent(xTextRange, xTextContent, (unsigned char) 0);
+            Reference<XCell> xCell = xTable->getCellByName(OUString::createFromAscii("A1"));
+            xText = Reference<XText>(xCell, UNO_QUERY);
+            xTextCursor = xText->createTextCursor();
+            xTextCursor->setString(OUString::createFromAscii("Word length"));
+            xCell = xTable->getCellByName(OUString::createFromAscii("B1"));
+            xText = Reference<XText>(xCell, UNO_QUERY);
+            xTextCursor = xText->createTextCursor();
+            xTextCursor->setString(OUString::createFromAscii("Counter"));
+
+            // Fill table
+            int rowi = 1;
+            OUString cellName;
+            for (auto& p : wordLenCounter) {
+                ++rowi;
+
+                cellName = OUString::createFromAscii(("A" + std::to_string(rowi)).c_str());
+                xCell = xTable->getCellByName(cellName);
+                xCell->setValue(p.first);
+
+                cellName = OUString::createFromAscii(("B" + std::to_string(rowi)).c_str());
+                xCell = xTable->getCellByName(cellName);
+                xCell->setValue(p.second);
             }
         }
 
