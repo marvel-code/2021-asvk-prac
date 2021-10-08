@@ -279,6 +279,14 @@ bool isLanguageChar(rtl::OUString x) {
     return false;
 }
 
+bool isRussianChar(rtl::OUString x) {
+    for (int i = 0; i < RU.getLength(); ++i) {
+        if (x == RU.copy(i, 1))
+            return true;
+    }
+    return false;
+}
+
 
 
 void SAL_CALL 
@@ -421,6 +429,39 @@ BaseDispatch::dispatch(
                 xCell = xTable->getCellByName(cellName);
                 xCell->setValue(p.second);
             }
+        } else if (aURL.Path == "colorCyrilics") {
+            Reference<XTextDocument> xTextDocument(mxFrame->getController()->getModel(), UNO_QUERY);
+            Reference<XText> xText = xTextDocument->getText();
+            Reference<XTextCursor> xTextCursor = xText->createTextCursor();
+            Reference<XPropertySet> xCursorProps(xTextCursor, UNO_QUERY);
+
+            bool hasWordRussianChar = false;
+            int wordLen = 0;
+            auto processWord = [&](int shift = 0) mutable {
+                if (wordLen != 0) {
+                    if (hasWordRussianChar) {
+                        xTextCursor->goLeft(wordLen + shift, false);
+                        xTextCursor->goRight(wordLen, true);
+                        xCursorProps->setPropertyValue("CharBackColor", makeAny(0xaa0000));
+                    }
+                    hasWordRussianChar = false;
+                    wordLen = 0;
+                }
+            };
+            for (int i = 0; xTextCursor->goRight(1, true); ++i) {
+                sal_Unicode c = xTextCursor->getString()[i];
+
+                if (isLanguageChar((OUString)c)) {
+                    wordLen += 1;
+                    if (isRussianChar((OUString)c))
+                        hasWordRussianChar = true;
+                } else {
+                    processWord(1);
+                    xTextCursor->gotoStart(false);
+                    xTextCursor->goRight(1 + i, true);
+                }
+            }
+            processWord();
         }
 
 

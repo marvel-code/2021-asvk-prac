@@ -116,7 +116,7 @@
                 </node>
 
                 <!-- Button cyrilics color -->
-                <!-- <node oor:name="m7" oor:op="replace">
+                <node oor:name="m7" oor:op="replace">
                     <prop oor:name="URL" oor:type="xs:string">
                         <value>vnd.demo.complextoolbarcontrols.demoaddon:colorCyrilics</value>
                     </prop>
@@ -132,7 +132,7 @@
                     <prop oor:name="ControlType" oor:type="xs:string">
                         <value>Button</value>
                     </prop>
-                </node> -->
+                </node>
             </node>
         </node>
     </node>
