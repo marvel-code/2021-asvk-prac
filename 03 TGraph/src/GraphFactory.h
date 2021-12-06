@@ -4,6 +4,5 @@
 
 class GraphFactory {
 public:
-    template<typename T>
-    TGraph* Create(std::string type, std::initializer_list<T> args);
+    TGraph* Create(std::string type, std::initializer_list<char> args...);
 };

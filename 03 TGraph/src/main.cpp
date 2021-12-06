@@ -7,5 +7,8 @@ using std::cout, std::cin, std::endl;
 int main(int argc, char** argv) {
     GraphFactory graphFactory;
 
-    auto cg = graphFactory.Create("complete", { 'A', 'B', 'C' });
+    auto cg1 = (CompleteGraph*)graphFactory.Create("complete", { 'A', 'B', 'C', 'D' });
+    auto cg2 = (CompleteGraph*)graphFactory.Create("complete", { 'A', 'B', 'C' });
+    cout << (*cg1 + *cg2).ToString() << endl;
+    cout << (*cg1 - *cg2).ToString() << endl;
 }

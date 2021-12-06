@@ -2,8 +2,7 @@
 #include "CompleteGraph.h"
 
 
-template<typename T>
-TGraph* GraphFactory::Create(std::string type, std::initializer_list<T> args) {
+TGraph* GraphFactory::Create(std::string type, std::initializer_list<char> args...) {
     if (type == "complete") {
         return new CompleteGraph(args);
     }
