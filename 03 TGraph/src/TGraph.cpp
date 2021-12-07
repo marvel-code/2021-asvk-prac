@@ -25,16 +25,23 @@ const std::vector<std::vector<char>> TGraph::GetEdges() const {
 }
 
 SimpleGraph operator+(const TGraph& g1, const TGraph& g2) {
-    std::unordered_set<std::vector<char>, UnorderedEdgeHash> mergedEdges;
+    std::unordered_set<std::vector<char>, UnorderedEdgeHash> edges;
     for (auto edge: g1.GetEdges()) {
-        mergedEdges.insert(edge);
+        edges.insert(edge);
     }
     for (auto edge: g2.GetEdges()) {
-        mergedEdges.insert(edge);
+        edges.insert(edge);
     }
-    return SimpleGraph(std::vector(mergedEdges.begin(), mergedEdges.end()));
+    return SimpleGraph(std::vector(edges.begin(), edges.end()));
 }
 
 SimpleGraph operator-(const TGraph& g1, const TGraph& g2) {
-    return SimpleGraph();
+    std::unordered_set<std::vector<char>, UnorderedEdgeHash> edges;
+    for (auto edge: g1.GetEdges()) {
+        edges.insert(edge);
+    }
+    for (auto edge: g2.GetEdges()) {
+        edges.extract(edge);
+    }
+    return SimpleGraph(std::vector(edges.begin(), edges.end()));
 }

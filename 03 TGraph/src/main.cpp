@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
     cout << (*cg1 + *cg2).ToString() << endl;
     cout << (*cg1 - *cg2).ToString() << endl;
     
-    auto sg1 = (SimpleGraph*)graphFactory.Create("simple", { "AB", "DE" });
+    auto sg1 = (SimpleGraph*)graphFactory.Create("simple", { "AB", "DE", "BC" });
     auto sg2 = (SimpleGraph*)graphFactory.Create("simple", { "BC", "CD" });
     cout << (*sg1 + *sg2).ToString() << endl;
     cout << (*sg1 - *sg2).ToString() << endl;
