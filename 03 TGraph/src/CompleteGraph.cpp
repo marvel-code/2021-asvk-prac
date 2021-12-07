@@ -1,30 +1,26 @@
-#include "CompleteGraph.h"
-#include "utils.h"
+#include "h/CompleteGraph.h"
+#include "h/utils.h"
 #include <vector>
 #include <string>
 #include <set>
 
-CompleteGraph::CompleteGraph(std::vector<char> vertices) : _vertices(vertices) {}
-
-std::string CompleteGraph::ToString() const {
-    return std::string()
-        .append("{ ")
-        .append(stringJoin(_vertices, ", "))
-        .append(" }");
-}
-
-const std::vector<char> CompleteGraph::GetVertices() const {
-    return _vertices;
-}
-
-std::vector<std::vector<char>> CompleteGraph::GetEdges() const {
+CompleteGraph::CompleteGraph(std::vector<char> vertices) {
+    _vertices = vertices;
     std::vector<std::vector<char>> edges;
     for (auto v1: _vertices) {
         for (auto v2: _vertices) {
             edges.push_back({ v1, v2 });
         }
     }
-    return edges;
+
+    _edges = edges;
+}
+
+std::string CompleteGraph::ToString() const {
+    return std::string()
+        .append("{ ")
+        .append(charJoin(_vertices, ", "))
+        .append(" }");
 }
 
 CompleteGraph operator+(const CompleteGraph& g1, const CompleteGraph& g2) {

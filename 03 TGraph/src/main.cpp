@@ -1,5 +1,6 @@
 #include <iostream>
-#include "GraphFactory.h"
+#include "h/GraphFactory.h"
+#include "h/SimpleGraph.h"
 #include <vector>
 
 using std::cout, std::cin, std::endl;

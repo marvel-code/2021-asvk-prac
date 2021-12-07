@@ -1,5 +1,5 @@
-#include "GraphFactory.h"
-#include "CompleteGraph.h"
+#include "h/GraphFactory.h"
+#include "h/CompleteGraph.h"
 
 
 TGraph* GraphFactory::Create(std::string type, std::initializer_list<char> args...) {
