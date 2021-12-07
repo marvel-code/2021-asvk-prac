@@ -3,7 +3,7 @@ SRCDIR=src
 BINDIR=bin
 
 main:
-	g++ -std=c++2a \
+	g++ -std=c++2a -g \
 		$(SRCDIR)/main.cpp \
 		$(SRCDIR)/GraphFactory.cpp \
 		$(SRCDIR)/TGraph.cpp \

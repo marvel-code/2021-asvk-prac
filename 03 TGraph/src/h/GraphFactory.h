@@ -4,5 +4,8 @@
 
 class GraphFactory {
 public:
-    TGraph* Create(std::string type, std::initializer_list<char> args...);
+    TGraph* Create(std::string type, std::initializer_list<char> vertices);
+    TGraph* Create(std::string type, std::initializer_list<const char*> edges);
+    // TGraph* Create(std::string type, std::initializer_list<char> vertices, std::initializer_list<char16_t> edges);
+    // TGraph* Create(std::string type, std::initializer_list<char> vertices, std::initializer_list<int> weights);
 };

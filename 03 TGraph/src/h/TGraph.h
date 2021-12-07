@@ -5,6 +5,7 @@
 
 class SimpleGraph;
 
+
 class TGraph {
 
 protected:
@@ -12,9 +13,9 @@ protected:
     std::vector<std::vector<char>> _edges;
     
 public:    
-    virtual std::string ToString() const = 0;
+    virtual std::string ToString() const;
     virtual const std::vector<char> GetVertices() const;
-    virtual std::vector<std::vector<char>> GetEdges() const;
+    virtual const std::vector<std::vector<char>> GetEdges() const;
     
     friend SimpleGraph operator+(const TGraph& g1, const TGraph& g2);
     friend SimpleGraph operator-(const TGraph& g1, const TGraph& g2);

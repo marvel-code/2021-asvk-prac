@@ -1,6 +1,8 @@
 #include "h/graphUtils.h"
 #include <algorithm>
 
+#include <iostream>
+
 std::string makeEdgeString(const std::vector<char>& edge) {
     std::string result;
     result.push_back(edge[0]);
