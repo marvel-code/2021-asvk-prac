@@ -52,6 +52,11 @@ WeightedGraph operator-(const WeightedGraph& g1, const WeightedGraph& g2) {
     return g1 - (TGraph)g2;
 }
 
+/**
+ * @brief A - B = G:
+ * - Множество рёбер G эквивалентно разности множеств рёбер A и B;
+ * - Веса рёбер, присутствующих в результирующем множестве рёбер G, переносятся из A.
+ */
 WeightedGraph operator-(const WeightedGraph& g1, const TGraph& g2) {
     // Make edges
     std::unordered_set<std::vector<char>, UnorderedEdgeHash> edgesSet;
@@ -77,6 +82,11 @@ WeightedGraph operator-(const WeightedGraph& g1, const TGraph& g2) {
 
     return WeightedGraph(edges, weights);
 }
+
+/**
+ * @brief A - B = G:
+ * - Множество рёбер G эквивалентно разности множеств рёбер A и B
+ */
 TGraph operator-(const TGraph& g1, const WeightedGraph& g2) {
     // Make edges
     std::unordered_set<std::vector<char>, UnorderedEdgeHash> edges;
@@ -87,14 +97,5 @@ TGraph operator-(const TGraph& g1, const WeightedGraph& g2) {
         edges.extract(edge);
     }
 
-    // Make vertices
-    std::unordered_set<char> vertices;
-    for (auto edge: edges) {
-        vertices.insert({ edge[0], edge[1] });
-    }
-
-    return TGraph(
-        std::vector(vertices.begin(), vertices.end()), 
-        std::vector(edges.begin(), edges.end())
-    );
+    return SimpleGraph(std::vector(edges.begin(), edges.end()));
 }

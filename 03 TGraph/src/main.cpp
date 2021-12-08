@@ -24,4 +24,6 @@ int main(int argc, char** argv) {
     auto wg2 = (WeightedGraph*)graphFactory.Create("weighted", { "BC", "CD", "AB" }, { 1, 5, 3 });
     cout << (*wg1 + *wg2).ToString() << endl;
     cout << (*wg1 - *wg2).ToString() << endl;
+    cout << (*wg1 - *sg1).ToString() << endl;
+    cout << (*sg1 - *wg1).ToString() << endl;
 }

@@ -23,8 +23,7 @@ std::string stringJoin(const std::vector<std::string>& vec, const std::string& s
     return result;
 }
 
-template<typename T>
-int findIndex(const std::vector<T>& vec, std::function<bool(T)> predicate) {
+int findIndex(const std::vector<std::vector<char>>& vec, std::function<bool(std::vector<char>)> predicate) {
     for (int i = 0; i < vec.size(); ++i) {
         if (predicate(vec[i]))
             return i;
