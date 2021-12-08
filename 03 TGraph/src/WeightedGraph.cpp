@@ -5,7 +5,9 @@
 #include <algorithm>
 #include <set>
 #include <unordered_map>
+#include <unordered_set>
 #include "h/graphValidation.h"
+#include "h/SimpleGraph.h"
 
 WeightedGraph::WeightedGraph(std::vector<Edge> edges, std::vector<int> weights) : _weights(weights) {
     if (!validateEdges(edges))
@@ -30,7 +32,7 @@ WeightedGraph::WeightedGraph(std::vector<const char*> edgeStrings, std::vector<i
     }
     if (!validateEdges(edges))
         throw std::invalid_argument("Edges validation failed: " + makeEdgesString(edges));
-        
+
     _edges = edges;
     syncVertices();
 }
@@ -86,3 +88,66 @@ WeightedGraph operator+(const WeightedGraph& g1, const WeightedGraph& g2) {
     }
     return WeightedGraph(edges, weights);
 }
+
+WeightedGraph operator-(const WeightedGraph& g1, const WeightedGraph& g2) {
+    return g1 - (TGraph)g2;
+}
+
+/**
+ * @brief A - B = G:
+ * - Множество рёбер G эквивалентно разности множеств рёбер A и B;
+ * - Веса рёбер, присутствующих в результирующем множестве рёбер G, переносятся из A.
+ */
+WeightedGraph operator-(const WeightedGraph& g1, const TGraph& g2) {
+    // Make edges
+    std::unordered_set<Edge, UnorderedEdgeHash> edgesSet;
+    for (auto edge: g1.GetEdges()) {
+        edgesSet.insert(edge);
+    }
+    for (auto edge: g2.GetEdges()) {
+        edgesSet.extract(edge);
+    }
+    std::vector<Edge> edges(edgesSet.begin(), edgesSet.end());
+
+    // Set weights
+    std::vector<int> weights;
+    for (auto edge: edges) {
+        int index = findIndex(
+            g1.GetEdges(), 
+            std::function<bool(Edge)>([&edge](Edge e) {
+                return edge[0] == e[0] && edge[1] == e[1]; 
+            })
+        );
+        weights.push_back(g1.GetWeights()[index]);
+    }
+
+    return WeightedGraph(edges, weights);
+}
+
+/**
+ * @brief A - B = G:
+ * - Множество рёбер G эквивалентно разности множеств рёбер A и B
+ */
+TGraph operator-(const TGraph& g1, const WeightedGraph& g2) {
+    // Make edges
+    std::unordered_set<Edge, UnorderedEdgeHash> edges;
+    for (auto edge: g1.GetEdges()) {
+        edges.insert(edge);
+    }
+    for (auto edge: g2.GetEdges()) {
+        edges.extract(edge);
+    }
+
+    return SimpleGraph(std::vector(edges.begin(), edges.end()));
+}
+
+WeightedGraph TGraph::AsWeighted(int defaultWeight) {
+    // Init weights
+    std::vector<int> weights;
+    for (int i = 0; i < _edges.size(); ++i) {
+        weights.push_back(defaultWeight);
+    }
+
+    return WeightedGraph(_edges, weights);
+}
+

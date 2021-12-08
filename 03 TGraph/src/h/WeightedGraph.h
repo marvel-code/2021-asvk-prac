@@ -16,4 +16,7 @@ public:
     std::vector<int> GetWeights() const;
     
     friend WeightedGraph operator+(const WeightedGraph& g1, const WeightedGraph& g2);
+    friend WeightedGraph operator-(const WeightedGraph& g1, const WeightedGraph& g2);
+    friend WeightedGraph operator-(const WeightedGraph& g1, const TGraph& g2);
+    friend TGraph operator-(const TGraph& g1, const WeightedGraph& g2);
 };
