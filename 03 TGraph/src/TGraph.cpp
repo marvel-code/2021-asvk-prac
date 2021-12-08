@@ -9,10 +9,19 @@
 #include <algorithm>
 #include "h/SimpleGraph.h"
 #include "h/WeightedGraph.h"
+#include "h/graphValidation.h"
 
 #include <iostream>
 
-TGraph::TGraph(std::vector<Vertex> vertices, std::vector<Edge> edges) : _vertices(vertices), _edges(edges) {}
+TGraph::TGraph(std::vector<Vertex> vertices, std::vector<Edge> edges) {
+    if (!validateVertices(vertices))
+        throw std::invalid_argument("Vertices validation failed: " + makeVerticesString(vertices));
+    if (!validateEdges(edges))
+        throw std::invalid_argument("Edges validation failed: " + makeEdgesString(edges));
+
+    _vertices = vertices;
+    _edges = edges;
+}
 
 std::string TGraph::ToString() const {
     return std::string()

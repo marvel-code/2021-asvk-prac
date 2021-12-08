@@ -1,11 +1,19 @@
 #include "h/BipartiteGraph.h"
 #include "h/graphUtils.h"
 #include "set"
+#include "h/graphValidation.h"
 
 BipartiteGraph::BipartiteGraph(
     std::vector<Vertex> topVertices, 
     std::vector<Vertex> bottomVertices
-) : _topVertices(topVertices), _bottomVertices(bottomVertices) {
+) {
+    if (!validateVertices(topVertices))
+        throw std::invalid_argument("Top vertices validation failed: " + makeVerticesString(topVertices));
+    if (!validateVertices(bottomVertices))
+        throw std::invalid_argument("Bottom vertices validation failed: " + makeVerticesString(bottomVertices));
+
+    _topVertices = topVertices;
+    _bottomVertices = bottomVertices;
 
     // Fill vertices
     _vertices.reserve(topVertices.size() + bottomVertices.size());

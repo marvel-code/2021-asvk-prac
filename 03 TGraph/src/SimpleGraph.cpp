@@ -5,8 +5,12 @@
 #include <algorithm>
 #include <set>
 #include <iostream>
+#include "h/graphValidation.h"
 
 SimpleGraph::SimpleGraph(std::vector<Edge> edges) {
+    if (!validateEdges(edges))
+        throw std::invalid_argument("Edges validation failed: " + makeEdgesString(edges));
+
     _edges = edges;
     syncVertices();
 }

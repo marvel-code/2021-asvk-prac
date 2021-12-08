@@ -4,8 +4,12 @@
 #include <vector>
 #include <string>
 #include <set>
+#include "h/graphValidation.h"
 
 CompleteGraph::CompleteGraph(std::vector<Vertex> vertices) {
+    if (!validateVertices(vertices))
+        throw std::invalid_argument("Vertices validation failed: " + makeVerticesString(vertices));
+
     _vertices = vertices;
     std::vector<std::vector<Vertex>> edges;
     for (auto v1: _vertices) {

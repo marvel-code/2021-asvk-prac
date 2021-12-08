@@ -5,8 +5,12 @@
 #include <algorithm>
 #include <set>
 #include <unordered_map>
+#include "h/graphValidation.h"
 
 WeightedGraph::WeightedGraph(std::vector<Edge> edges, std::vector<int> weights) : _weights(weights) {
+    if (!validateEdges(edges))
+        throw std::invalid_argument("Edges validation failed: " + makeEdgesString(edges));
+    
     _edges = edges;
     syncVertices();
 }

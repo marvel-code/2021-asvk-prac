@@ -14,4 +14,5 @@ main:
 		$(SRCDIR)/BipartiteGraph.cpp \
 		$(SRCDIR)/utils.cpp \
 		$(SRCDIR)/graphUtils.cpp \
+		$(SRCDIR)/graphValidation.cpp \
 		-o $(BINDIR)/main
