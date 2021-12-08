@@ -2,6 +2,7 @@
 #include "h/graphUtils.h"
 #include "set"
 #include "h/graphValidation.h"
+#include "h/utils.h"
 
 BipartiteGraph::BipartiteGraph(
     std::vector<Vertex> topVertices, 
@@ -11,6 +12,11 @@ BipartiteGraph::BipartiteGraph(
         throw std::invalid_argument("Top vertices validation failed: " + makeVerticesString(topVertices));
     if (!validateVertices(bottomVertices))
         throw std::invalid_argument("Bottom vertices validation failed: " + makeVerticesString(bottomVertices));
+    if (intersection(topVertices, bottomVertices).size() > 0)
+        throw std::invalid_argument("Detected top and bottom vertices intersection: "
+            + std::string("Top: ") + makeVerticesString(topVertices) + ". "
+            + std::string("Bottom: ") + makeVerticesString(bottomVertices) + "."
+        );
 
     _topVertices = topVertices;
     _bottomVertices = bottomVertices;
