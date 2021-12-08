@@ -26,4 +26,5 @@ int main(int argc, char** argv) {
     cout << (*wg1 - *wg2).ToString() << endl;
     cout << (*wg1 - *sg1).ToString() << endl;
     cout << (*sg1 - *wg1).ToString() << endl;
+
 }

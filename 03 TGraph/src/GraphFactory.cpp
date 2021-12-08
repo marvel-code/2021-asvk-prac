@@ -2,6 +2,7 @@
 #include "h/CompleteGraph.h"
 #include "h/SimpleGraph.h"
 #include "h/WeightedGraph.h"
+#include "h/BipartiteGraph.h"
 
 
 TGraph* GraphFactory::Create(std::string type, std::initializer_list<char> vertices) {
@@ -25,10 +26,10 @@ TGraph* GraphFactory::Create(std::string type, std::initializer_list<const char*
     return nullptr;
 };
 
-// TGraph* GraphFactory::Create(std::string type, std::initializer_list<char> vertices) {
-//     if (type == "complete") {
-//         return new CompleteGraph(arg1);
-//     }
-//     return nullptr;
-// };
+TGraph* GraphFactory::Create(std::string type, std::initializer_list<char> vertices1, std::initializer_list<char> vertices2) {
+    if (type == "bipartite") {
+        return new BipartiteGraph(vertices1, vertices2);
+    }
+    return nullptr;
+};
 
