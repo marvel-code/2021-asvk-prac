@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     cout << (*sg1 - *sg2).ToString() << endl;
 
     auto bg1 = (BipartiteGraph*)graphFactory.Create("bipartite", { 'A', 'B' }, { 'C', 'D', 'E' });
-    auto bg2 = (BipartiteGraph*)graphFactory.Create("bipartite", { 'A', 'B', 'C' }, { 'D', 'E' });
+    auto bg2 = (BipartiteGraph*)graphFactory.Create("bipartite", { 'A', 'B' }, { 'D', 'E' });
     cout << (*bg1 + *bg2).ToString() << endl;
     cout << (*bg1 - *bg2).ToString() << endl;
     
@@ -35,4 +35,6 @@ int main(int argc, char** argv) {
 
     auto awg = sg1->AsWeighted(27);
     cout << awg.ToString() << endl;
+
+    *wg1 + *sg1;
 }

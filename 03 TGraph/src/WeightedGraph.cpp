@@ -89,6 +89,14 @@ WeightedGraph operator+(const WeightedGraph& g1, const WeightedGraph& g2) {
     return WeightedGraph(edges, weights);
 }
 
+TGraph operator+(const WeightedGraph& g1, const TGraph& g2) {
+    throw std::logic_error("Edge weights not defined for other graphs.");
+}
+
+TGraph operator+(const TGraph& g1, const WeightedGraph& g2) {
+    throw std::logic_error("Edge weights not defined for other graphs.");
+}
+
 WeightedGraph operator-(const WeightedGraph& g1, const WeightedGraph& g2) {
     return g1 - (TGraph)g2;
 }
