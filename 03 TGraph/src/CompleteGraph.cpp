@@ -27,7 +27,7 @@ CompleteGraph operator+(const CompleteGraph& g1, const CompleteGraph& g2) {
     for (auto v: g1.GetVertices()) {
         mergedVertices.push_back(v);
     }
-    std::set<char> g1VertexSet(g2._vertices.begin(), g2._vertices.end());
+    std::set<char> g1VertexSet(g1._vertices.begin(), g1._vertices.end());
     for (auto v: g2.GetVertices()) {
         if (g1VertexSet.count(v) == 0)
             mergedVertices.push_back(v);
