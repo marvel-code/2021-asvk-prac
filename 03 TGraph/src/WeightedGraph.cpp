@@ -28,6 +28,9 @@ WeightedGraph::WeightedGraph(std::vector<const char*> edgeStrings, std::vector<i
     for (auto edgeString: edgeStrings) {
         edges.push_back(Edge{ edgeString[0], edgeString[1] });
     }
+    if (!validateEdges(edges))
+        throw std::invalid_argument("Edges validation failed: " + makeEdgesString(edges));
+        
     _edges = edges;
     syncVertices();
 }
