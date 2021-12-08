@@ -1,6 +1,7 @@
 #include "h/utils.h"
 #include <string>
 #include <vector>
+#include <functional>
 
 std::string charJoin(const std::vector<char>& vec, const std::string& splitter) {
     if (vec.size() == 0)
@@ -20,4 +21,13 @@ std::string stringJoin(const std::vector<std::string>& vec, const std::string& s
         result.append(splitter).append(vec[i]);
     }
     return result;
+}
+
+template<typename T>
+int findIndex(const std::vector<T>& vec, std::function<bool(T)> predicate) {
+    for (int i = 0; i < vec.size(); ++i) {
+        if (predicate(vec[i]))
+            return i;
+    }
+    return -1;
 }

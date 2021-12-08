@@ -42,6 +42,10 @@ std::string WeightedGraph::ToString() const {
         .append(" }");
 }
 
+std::vector<int> WeightedGraph::GetWeights() const {
+    return _weights;
+}
+
 WeightedGraph operator+(const WeightedGraph& g1, const WeightedGraph& g2) {
     std::unordered_map<
         const std::vector<char>, 

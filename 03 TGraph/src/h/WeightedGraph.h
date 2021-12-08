@@ -13,6 +13,7 @@ public:
     WeightedGraph(std::vector<const char*> edgeStrings, std::vector<int> weights);
 
     std::string ToString() const override;
+    std::vector<int> GetWeights() const;
     
     friend WeightedGraph operator+(const WeightedGraph& g1, const WeightedGraph& g2);
 };
