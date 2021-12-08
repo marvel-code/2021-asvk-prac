@@ -62,3 +62,26 @@ BipartiteGraph operator+(const BipartiteGraph& g1, const BipartiteGraph& g2) {
     return BipartiteGraph(mergedTopVertices, mergedBottomVertices);
 }
 
+BipartiteGraph operator-(const BipartiteGraph& g1, const BipartiteGraph& g2) {
+
+    // Top vertices minus
+    std::vector<char> topVertices;
+    topVertices.reserve(g1._topVertices.size());
+    std::set<char> g2TopVertexSet(g2._topVertices.begin(), g2._topVertices.end());
+    for (auto v: g1._topVertices) {
+        if (g2TopVertexSet.count(v) == 0)
+            topVertices.push_back(v);
+    }
+    
+    // Bottom vertices merge
+    std::vector<char> bottomVertices;
+    bottomVertices.reserve(g1._bottomVertices.size());
+    std::set<char> g2BottomVertexSet(g2._bottomVertices.begin(), g2._bottomVertices.end());
+    for (auto v: g1._bottomVertices) {
+        if (g2BottomVertexSet.count(v) == 0)
+            bottomVertices.push_back(v);
+    }
+
+    return BipartiteGraph(topVertices, bottomVertices);
+}
+

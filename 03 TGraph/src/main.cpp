@@ -24,6 +24,7 @@ int main(int argc, char** argv) {
     auto bg1 = (BipartiteGraph*)graphFactory.Create("bipartite", { 'A', 'B' }, { 'C', 'D', 'E' });
     auto bg2 = (BipartiteGraph*)graphFactory.Create("bipartite", { 'A', 'B', 'C' }, { 'D', 'E' });
     cout << (*bg1 + *bg2).ToString() << endl;
+    cout << (*bg1 - *bg2).ToString() << endl;
     
     auto wg1 = (WeightedGraph*)graphFactory.Create("weighted", { "AB", "BC", "EA" }, { 1, 2, 3 });
     auto wg2 = (WeightedGraph*)graphFactory.Create("weighted", { "BC", "CD", "AB" }, { 1, 5, 3 });
