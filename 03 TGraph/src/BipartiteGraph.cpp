@@ -22,3 +22,12 @@ BipartiteGraph::BipartiteGraph(
         }
     }
 }
+
+std::string BipartiteGraph::ToString() const {
+    return std::string()
+        .append("Top: ")
+        .append(makeVerticesString(_topVertices))
+        .append(". Bottom: ")
+        .append(makeVerticesString(_bottomVertices))
+        .append(".");
+}
