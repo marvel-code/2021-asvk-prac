@@ -6,7 +6,7 @@
 #include <set>
 #include <unordered_map>
 
-WeightedGraph::WeightedGraph(std::vector<std::vector<char>> edges, std::vector<int> weights) : _weights(weights) {
+WeightedGraph::WeightedGraph(std::vector<Edge> edges, std::vector<int> weights) : _weights(weights) {
     _edges = edges;
     syncVertices();
 }
@@ -14,14 +14,14 @@ WeightedGraph::WeightedGraph(std::vector<std::vector<char>> edges, std::vector<i
 WeightedGraph::WeightedGraph(std::vector<const char*> edgeStrings, std::vector<int> weights) : _weights(weights) {
     std::vector<std::vector<char>> edges;
     for (auto edgeString: edgeStrings) {
-        edges.push_back(std::vector{ edgeString[0], edgeString[1] });
+        edges.push_back(Edge{ edgeString[0], edgeString[1] });
     }
     _edges = edges;
     syncVertices();
 }
 
 void WeightedGraph::syncVertices() {
-    std::set<char> vertices;
+    std::set<Vertex> vertices;
     for (auto edge: _edges) {
         vertices.insert(edge[0]);
         vertices.insert(edge[1]);
@@ -48,7 +48,7 @@ std::vector<int> WeightedGraph::GetWeights() const {
 
 WeightedGraph operator+(const WeightedGraph& g1, const WeightedGraph& g2) {
     std::unordered_map<
-        const std::vector<char>, 
+        const Edge, 
         int, 
         UnorderedEdgeHash
     > edgeWeights;
@@ -63,7 +63,7 @@ WeightedGraph operator+(const WeightedGraph& g1, const WeightedGraph& g2) {
             it->second = g2._weights[i];
     }
 
-    std::vector<std::vector<char>> edges;
+    std::vector<Edge> edges;
     std::vector<int> weights;
     for (auto it = edgeWeights.begin(); it != edgeWeights.end(); ++it) {
         edges.push_back(it->first);

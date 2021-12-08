@@ -5,7 +5,7 @@ class CompleteGraph : public TGraph {
 
 public:
     CompleteGraph() = default;
-    CompleteGraph(std::vector<char> vertices);
+    CompleteGraph(std::vector<Vertex> vertices);
 
     std::string ToString() const override;
 

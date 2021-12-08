@@ -9,7 +9,7 @@ private:
 
 public:
     WeightedGraph() = default;
-    WeightedGraph(std::vector<std::vector<char>> edges, std::vector<int> weights);
+    WeightedGraph(std::vector<Edge> edges, std::vector<int> weights);
     WeightedGraph(std::vector<const char*> edgeStrings, std::vector<int> weights);
 
     std::string ToString() const override;

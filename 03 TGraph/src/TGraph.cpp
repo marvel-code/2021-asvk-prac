@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-TGraph::TGraph(std::vector<char> vertices, std::vector<std::vector<char>> edges) : _vertices(vertices), _edges(edges) {}
+TGraph::TGraph(std::vector<Vertex> vertices, std::vector<Edge> edges) : _vertices(vertices), _edges(edges) {}
 
 std::string TGraph::ToString() const {
     return std::string()
@@ -23,16 +23,16 @@ std::string TGraph::ToString() const {
         .append(".");
 }
 
-const std::vector<char> TGraph::GetVertices() const {
+const std::vector<Vertex> TGraph::GetVertices() const {
     return _vertices;
 }
 
-const std::vector<std::vector<char>> TGraph::GetEdges() const {
+const std::vector<Edge> TGraph::GetEdges() const {
     return _edges;
 }
 
 SimpleGraph operator+(const TGraph& g1, const TGraph& g2) {
-    std::unordered_set<std::vector<char>, UnorderedEdgeHash> edges;
+    std::unordered_set<Edge, UnorderedEdgeHash> edges;
     for (auto edge: g1.GetEdges()) {
         edges.insert(edge);
     }
@@ -43,7 +43,7 @@ SimpleGraph operator+(const TGraph& g1, const TGraph& g2) {
 }
 
 SimpleGraph operator-(const TGraph& g1, const TGraph& g2) {
-    std::unordered_set<std::vector<char>, UnorderedEdgeHash> edges;
+    std::unordered_set<Edge, UnorderedEdgeHash> edges;
     for (auto edge: g1.GetEdges()) {
         edges.insert(edge);
     }
@@ -64,21 +64,21 @@ WeightedGraph operator-(const WeightedGraph& g1, const WeightedGraph& g2) {
  */
 WeightedGraph operator-(const WeightedGraph& g1, const TGraph& g2) {
     // Make edges
-    std::unordered_set<std::vector<char>, UnorderedEdgeHash> edgesSet;
+    std::unordered_set<Edge, UnorderedEdgeHash> edgesSet;
     for (auto edge: g1.GetEdges()) {
         edgesSet.insert(edge);
     }
     for (auto edge: g2.GetEdges()) {
         edgesSet.extract(edge);
     }
-    std::vector<std::vector<char>> edges(edgesSet.begin(), edgesSet.end());
+    std::vector<Edge> edges(edgesSet.begin(), edgesSet.end());
 
     // Set weights
     std::vector<int> weights;
     for (auto edge: edges) {
         int index = findIndex(
             g1.GetEdges(), 
-            std::function<bool(std::vector<char>)>([&edge](std::vector<char> e) {
+            std::function<bool(Edge)>([&edge](Edge e) {
                 return edge[0] == e[0] && edge[1] == e[1]; 
             })
         );
@@ -94,7 +94,7 @@ WeightedGraph operator-(const WeightedGraph& g1, const TGraph& g2) {
  */
 TGraph operator-(const TGraph& g1, const WeightedGraph& g2) {
     // Make edges
-    std::unordered_set<std::vector<char>, UnorderedEdgeHash> edges;
+    std::unordered_set<Edge, UnorderedEdgeHash> edges;
     for (auto edge: g1.GetEdges()) {
         edges.insert(edge);
     }

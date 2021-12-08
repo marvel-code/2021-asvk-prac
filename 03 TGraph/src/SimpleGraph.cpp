@@ -6,22 +6,22 @@
 #include <set>
 #include <iostream>
 
-SimpleGraph::SimpleGraph(std::vector<std::vector<char>> edges) {
+SimpleGraph::SimpleGraph(std::vector<Edge> edges) {
     _edges = edges;
     syncVertices();
 }
 
 SimpleGraph::SimpleGraph(std::vector<const char*> edgeStrings) {
-    std::vector<std::vector<char>> edges;
+    std::vector<Edge> edges;
     for (auto edgeString: edgeStrings) {
-        edges.push_back(std::vector{ edgeString[0], edgeString[1] });
+        edges.push_back(Edge{ edgeString[0], edgeString[1] });
     }
     _edges = edges;
     syncVertices();
 }
 
 void SimpleGraph::syncVertices() {
-    std::set<char> vertices;
+    std::set<Vertex> vertices;
     for (auto edge: _edges) {
         vertices.insert(edge[0]);
         vertices.insert(edge[1]);

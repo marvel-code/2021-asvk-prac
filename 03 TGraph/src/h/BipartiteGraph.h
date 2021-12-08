@@ -3,12 +3,12 @@
 class BipartiteGraph : public TGraph {
 
 private:
-    std::vector<char> _topVertices;
-    std::vector<char> _bottomVertices;
+    std::vector<Vertex> _topVertices;
+    std::vector<Vertex> _bottomVertices;
 
 public:
     BipartiteGraph() = default;
-    BipartiteGraph(std::vector<char> topVertices, std::vector<char> bottomVertices);
+    BipartiteGraph(std::vector<Vertex> topVertices, std::vector<Vertex> bottomVertices);
 
     std::string ToString() const override;
 
