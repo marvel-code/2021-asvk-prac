@@ -1,9 +1,10 @@
 
 SRCDIR=src
 BINDIR=bin
+CFLAGS=-std=c++2a -g
 
 main:
-	g++ -std=c++2a -g \
+	g++ $(CFLAGS) \
 		$(SRCDIR)/main.cpp \
 		$(SRCDIR)/GraphFactory.cpp \
 		$(SRCDIR)/TGraph.cpp \
