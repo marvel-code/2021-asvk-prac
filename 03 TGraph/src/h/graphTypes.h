@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 
 using Vertex = char;

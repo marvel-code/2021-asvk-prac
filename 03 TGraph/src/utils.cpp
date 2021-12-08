@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include <algorithm>
+#include <iterator>
 
 std::string charJoin(const std::vector<char>& vec, const std::string& splitter) {
     if (vec.size() == 0)
@@ -30,3 +32,18 @@ int findIndex(const std::vector<std::vector<char>>& vec, std::function<bool(std:
     }
     return -1;
 }
+
+template<typename T>
+std::vector<T> intersection(std::vector<T> &v1, std::vector<T> &v2) {
+    std::vector<T> v3;
+
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+
+    std::set_intersection(v1.begin(),v1.end(),
+                          v2.begin(),v2.end(),
+                          back_inserter(v3));
+    return v3;
+}
+
+template std::vector<char> intersection<char>(std::vector<char> &v1, std::vector<char> &v2);

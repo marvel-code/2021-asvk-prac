@@ -1,4 +1,4 @@
-#include "graphValidation.h"
+#include "h/graphValidation.h"
 
 bool validateVertex(Vertex vertex) {
     return vertex >= 'A' && vertex <= 'Z';
