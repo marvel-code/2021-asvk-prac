@@ -26,6 +26,6 @@ public:
     friend WeightedGraph operator-(const WeightedGraph& g1, const TGraph& g2);
     friend TGraph operator-(const TGraph& g1, const WeightedGraph& g2);
 
-    //WeightedGraph TGraph.AsWeighted(int default_weight) {}
+    WeightedGraph AsWeighted(int defaultWeight);
 };
 

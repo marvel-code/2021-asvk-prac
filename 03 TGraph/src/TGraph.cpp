@@ -104,3 +104,13 @@ TGraph operator-(const TGraph& g1, const WeightedGraph& g2) {
 
     return SimpleGraph(std::vector(edges.begin(), edges.end()));
 }
+
+WeightedGraph TGraph::AsWeighted(int defaultWeight) {
+    // Init weights
+    std::vector<int> weights;
+    for (int i = 0; i < _edges.size(); ++i) {
+        weights.push_back(defaultWeight);
+    }
+
+    return WeightedGraph(_edges, weights);
+}
