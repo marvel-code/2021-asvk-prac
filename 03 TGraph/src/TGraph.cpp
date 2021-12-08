@@ -19,7 +19,8 @@ std::string TGraph::ToString() const {
         .append("Vertices: ")
         .append(makeVerticesString(_vertices))
         .append(". Edges: ")
-        .append(makeEdgesString(_edges));
+        .append(makeEdgesString(_edges))
+        .append(".");
 }
 
 const std::vector<char> TGraph::GetVertices() const {

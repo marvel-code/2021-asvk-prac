@@ -30,10 +30,5 @@ void SimpleGraph::syncVertices() {
 }
 
 std::string SimpleGraph::ToString() const {
-    std::vector<std::string> edgeStrings(_edges.size());
-    std::transform(_edges.begin(), _edges.end(), edgeStrings.begin(), makeEdgeString);
-    return std::string()
-        .append("{ ")
-        .append(stringJoin(edgeStrings, ", "))
-        .append(" }");
+    return makeEdgesString(_edges);
 }

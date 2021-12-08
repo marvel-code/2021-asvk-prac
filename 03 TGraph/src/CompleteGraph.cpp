@@ -1,5 +1,6 @@
 #include "h/CompleteGraph.h"
 #include "h/utils.h"
+#include "h/graphUtils.h"
 #include <vector>
 #include <string>
 #include <set>
@@ -17,10 +18,7 @@ CompleteGraph::CompleteGraph(std::vector<char> vertices) {
 }
 
 std::string CompleteGraph::ToString() const {
-    return std::string()
-        .append("{ ")
-        .append(charJoin(_vertices, ", "))
-        .append(" }");
+    return makeVerticesString(_vertices);
 }
 
 CompleteGraph operator+(const CompleteGraph& g1, const CompleteGraph& g2) {
