@@ -1,3 +1,4 @@
+#pragma once
 #include "TGraph.h"
 
 class BipartiteGraph : public TGraph {
