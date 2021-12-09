@@ -116,15 +116,28 @@ vector<Edge> makeDijkstraShortestPath(
       // Stage 2. Hop next vertex.
       int nextVertexIndex = -1;
       for (int i = 0; i < vertices.size(); ++i) {
-        if (weightToNearVertices[i] == -1 || vertexInfos[i].first)
+        // Skip if visited.
+        if (vertexInfos[i].first)
           continue; 
+        // Skip if not connected with visited.
+        bool nearVisitedVertex = false;
+        for (int j = 0; j < vertices.size(); ++j) {
+          if (graphMatrix[i][j] != -1 && vertexInfos[j].first) {
+            nearVisitedVertex = true;
+            break;
+          }
+        }
+        if (!nearVisitedVertex)
+          continue;
+        // Minimum update.
         if (nextVertexIndex == -1 || vertexInfos[i].second < vertexInfos[nextVertexIndex].second)
           nextVertexIndex = i;
       }
       // Check for graph connectivity.
       if (nextVertexIndex == -1) {
-        if (!vertexInfos[endVertexIndex].first)
+        if (!vertexInfos[endVertexIndex].first) {
           throw std::logic_error(std::string("No path from ").append(1, startVertex).append(" to ").append(1, endVertex).append("."));
+        }
         break;
       }
       // Hop

@@ -37,8 +37,12 @@ int main(int argc, char** argv) {
     // auto awg = sg1->AsWeighted(27);
     // cout << awg.ToString() << endl;
 
-    auto wg3 = (WeightedGraph*)graphFactory.Create("weighted", { "AB", "BC" }, { 1, 2 });
-    auto shortestPath = makeDijkstraShortestPath(*wg3, 'A', 'C');
+    auto wg3 = (WeightedGraph*)graphFactory.Create(
+        "weighted", 
+        { "AB", "BC", "AC", "CD", "CF", "DF", "AF", "DE", "EZ" }, 
+        { 1, 3, 3, 1, 2, 1, 100, 4, 1 }
+    );
+    auto shortestPath = makeDijkstraShortestPath(*wg3, 'A', 'Z');
     cout << makeEdgesString(shortestPath) << endl;
 
     // Errors
