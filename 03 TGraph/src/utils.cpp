@@ -4,6 +4,7 @@
 #include <functional>
 #include <algorithm>
 #include <iterator>
+#include "h/graphTypes.h"
 
 std::string charJoin(const std::vector<char>& vec, const std::string& splitter) {
     if (vec.size() == 0)
@@ -25,9 +26,19 @@ std::string stringJoin(const std::vector<std::string>& vec, const std::string& s
     return result;
 }
 
-int findIndex(const std::vector<std::vector<char>>& vec, std::function<bool(std::vector<char>)> predicate) {
+template<typename T>
+int findIndex(const std::vector<T>& vec, std::function<bool(T)> predicate) {
     for (int i = 0; i < vec.size(); ++i) {
         if (predicate(vec[i]))
+            return i;
+    }
+    return -1;
+}
+
+template<typename T>
+int findIndex(const std::vector<T>& vec, T value) {
+    for (int i = 0; i < vec.size(); ++i) {
+        if (vec[i] == value)
             return i;
     }
     return -1;
@@ -46,4 +57,8 @@ std::vector<T> intersection(std::vector<T> &v1, std::vector<T> &v2) {
     return v3;
 }
 
-template std::vector<char> intersection<char>(std::vector<char> &v1, std::vector<char> &v2);
+template int findIndex<Vertex>(const std::vector<Vertex>& vec, Vertex value);
+template int findIndex<int>(const std::vector<int>& vec, std::function<bool(int)> predicate);
+template int findIndex<Vertex>(const std::vector<Vertex>& vec, std::function<bool(Vertex)> predicate);
+template int findIndex<Edge>(const std::vector<Edge>& vec, std::function<bool(Edge)> predicate);
+template std::vector<Vertex> intersection<Vertex>(std::vector<Vertex> &v1, std::vector<Vertex> &v2);
