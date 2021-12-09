@@ -90,11 +90,11 @@ WeightedGraph operator+(const WeightedGraph& g1, const WeightedGraph& g2) {
 }
 
 TGraph operator+(const WeightedGraph& g1, const TGraph& g2) {
-    throw std::logic_error("Edge weights not defined for other graphs.");
+    throw std::logic_error("WeightedGraph + OtherGraph error: Edge weights not defined for other graphs.");
 }
 
 TGraph operator+(const TGraph& g1, const WeightedGraph& g2) {
-    throw std::logic_error("Edge weights not defined for other graphs.");
+    throw std::logic_error("OtherGraph + WeightedGraph error: Edge weights not defined for other graphs.");
 }
 
 WeightedGraph operator-(const WeightedGraph& g1, const WeightedGraph& g2) {
