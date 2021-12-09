@@ -12,8 +12,10 @@ CompleteGraph::CompleteGraph(std::vector<Vertex> vertices) {
 
     _vertices = vertices;
     std::vector<std::vector<Vertex>> edges;
-    for (auto v1: _vertices) {
-        for (auto v2: _vertices) {
+    for (int i = 0; i < vertices.size(); ++i) {
+        Vertex v1 = vertices[i];
+        for (int j = i + 1; j < vertices.size(); ++j) {
+            Vertex v2 = vertices[j];
             edges.push_back({ v1, v2 });
         }
     }

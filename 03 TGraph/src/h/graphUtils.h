@@ -4,6 +4,8 @@
 #include "graphTypes.h"
 #include "WeightedGraph.h"
 
+bool equalUnorderedEdges(Edge e1, Edge e2);
+
 std::string makeEdgeString(const std::vector<char>& edge);
 
 std::string makeEdgesString(const std::vector<std::vector<char>>& edges);
