@@ -2,3 +2,4 @@
 #include "SimpleGraphTest.cpp"
 #include "BipartiteGraphTest.cpp"
 #include "WeightedGraphTest.cpp"
+#include "graphUtilsTest.cpp"
