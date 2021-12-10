@@ -32,6 +32,14 @@ WeightedGraph::WeightedGraph(std::vector<const char*> edgeStrings, std::vector<i
     }
     if (!validateEdges(edges))
         throw std::invalid_argument("Edges validation failed: " + makeEdgesString(edges));
+    if (edges.size() != weights.size())
+        throw std::invalid_argument(
+            "Edge and weight count difference: " 
+            + std::string("Edge count: ")
+            + std::to_string(edges.size()) + ". "
+            + std::string("Weight count: ")
+            + std::to_string(weights.size()) + "."
+        );
 
     _edges = edges;
     syncVertices();
